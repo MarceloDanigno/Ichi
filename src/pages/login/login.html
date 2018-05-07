@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class = "background" padding scrollbar-y-auto>
+  <h1>ICHI</h1>
+  <ion-card>
+    <ion-card-header>
+      Login
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label  floating>Nome de Usuário</ion-label>
+          <ion-input type = "text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label  floating>Senha</ion-label>
+          <ion-input type = "password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <p>Esqueceu sua senha?<a>  Clique aqui</a></p>
+        </ion-item>
+        <button ion-button color = "dark" block (click) = "test()">Entrar</button>
+      </ion-list>
+      <b>OU</b>
+      <button ion-button color = "primary" icon-left block>
+        <ion-icon name = "logo-facebook"></ion-icon>
+        <div>Entrar com Facebook</div>
+      </button> 
+      <button ion-button color = "danger" icon-left block>
+        <ion-icon name = "logo-google"></ion-icon>
+        <div>Entrar com Google</div>
+      </button> 
+    </ion-card-content>
+  </ion-card>
+</ion-content>

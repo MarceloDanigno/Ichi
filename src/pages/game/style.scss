@@ -33,6 +33,20 @@
 	z-index: -1;
 	/*pointer-events: none;*/
 }
+.current
+{
+	background-color: lightblue;
+	position: relative;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px; 
+	margin: 0px 0px 0px 0px;
+	height: 161px;
+	max-width: 100%;
+	z-index: -1;
+	/*pointer-events: none;*/
+}
 .card
 {
 	position: absolute;/*pointer-events: none;*/

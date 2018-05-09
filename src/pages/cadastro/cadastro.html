@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class = "background" padding>
+  <h1>ICHI</h1>
+  <!--<span>{{this.Senha + "|"+ this.Senha2}}</span>!-->
+  <ion-card>
+    <ion-card-header>
+      Cadastro
+    </ion-card-header>
+      <ion-card-content>
+        <form padding [formGroup] = "cadastroForm" (submit) = "cadastro()" novalidate>
+          <ion-list no-lines>
+            
+            <ion-item>
+              <ion-label color = "dark" floating>E-mail</ion-label>
+              <ion-input type = "text"
+                        [(ngModel)] = "Email"
+                        formControlName = "email"
+              ></ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorEmail" class = "error"> {{messageEmail}} </h6>
+           
+            <ion-item>
+              <ion-label color = "dark"  floating>Nome de usúario</ion-label>
+              <ion-input [(ngModel)] = "Nome"
+                          formControlName = "nome"
+                          type = "text"
+
+              ></ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorNome" class = "error"> {{messageNome}} </h6>
+            
+            <ion-item>
+              <ion-label color = "dark" floating>Senha</ion-label>
+              <ion-input 
+                [(ngModel)] = "Senha"
+                formControlName = "senha"
+                type = "password" >
+              </ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorSenha" class = "error"> {{messageSenha}} </h6>
+            
+            <ion-item>
+              <ion-label color = "dark" floating>Confirme a Senha</ion-label>
+              <ion-input
+                type = "password"
+                [(ngModel)] = "Senha2"
+                formControlName = "senha2"
+              ></ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorSenha2" class = "error"> {{messageSenha2}} </h6>
+            <h6 *ngIf = "Confirma" class = "error"> Senhas diferentes </h6>
+            <button ion-button color = "dark" block>Cadastrar</button>
+          </ion-list> 
+      </form>
+      </ion-card-content>
+   </ion-card>
+</ion-content>

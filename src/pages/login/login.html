@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class = "background" padding scrollbar-y-auto>
+  <h1>ICHI</h1>
+  <ion-card>
+    <ion-card-header>
+      Login
+    </ion-card-header>
+      <ion-card-content>
+        <form padding [formGroup] = "loginForm" (submit) = "login()" novalidate>
+          <ion-list no-lines>
+           
+            <ion-item>
+              <ion-label color = "dark" floating>Nome de Usuário</ion-label>
+              <ion-input type = "text"
+                [(ngModel)] = "nome"
+                formControlName = "nome"
+              ></ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorNome" class = "error"> {{messageNome}} </h6>
+            
+            <ion-item>
+              <ion-label color = "dark" floating>Senha</ion-label>
+              <ion-input type = "password"
+                  [(ngModel)] = "senha"
+                  formControlName = "senha"
+              ></ion-input>
+            </ion-item>
+            <h6 *ngIf = "errorSenha" class = "error"> {{messageSenha}} </h6>
+            <ion-item>
+              <p class = "oi">Esqueceu sua senha?<a>Clique aqui</a></p>
+            </ion-item>
+            
+            <button ion-button color = "dark" block>Entrar</button>
+          </ion-list>
+          <!--<b>OU</b>
+          <button ion-button color = "primary" icon-left block>
+            <ion-icon name = "logo-facebook"></ion-icon>
+            <div>Entrar com Facebook</div>
+          </button> 
+          <button ion-button color = "danger" icon-left block>
+            <ion-icon name = "logo-google"></ion-icon>
+            <div>Entrar com Google</div>
+          </button> !--> 
+        </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

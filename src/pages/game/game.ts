@@ -34,7 +34,7 @@ export class  game
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8001');
+			 	this.socket = new WebSocket('ws://localhost:8004');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
 			 	function requirestart(event)
@@ -45,7 +45,7 @@ export class  game
 				{
 					var action = JSON.parse(event.data);
 					console.log(action);
-					if (action.type == "state") 
+					if (action.type == "state")
 					{
 						if (action.data == "true")
 						{

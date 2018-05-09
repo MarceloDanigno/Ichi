@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { Menu01Page} from '../pages/menu01/menu01';
 import { Menu02Page} from '../pages/Menu02/Menu02';
+import { HTTP } from '@ionic-native/http';
 @NgModule({
   declarations: [
     MyApp,
@@ -38,6 +39,7 @@ import { Menu02Page} from '../pages/Menu02/Menu02';
   providers: [
     StatusBar,
     SplashScreen,
+    HTTP,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

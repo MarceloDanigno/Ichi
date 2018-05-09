@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Menu02Page} from '../Menu02/Menu02';
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { FormBuilder, Validators} from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -15,14 +10,42 @@ import {Menu02Page} from '../Menu02/Menu02';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  public loginForm: any; 
+  errorNome = false;
+  errorSenha = false;
+  messageNome = "";
+  messageSenha = "";
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams, formBuilder: FormBuilder) {
+    this.loginForm = formBuilder.group({
+      nome: ['', Validators.required],
+      senha: ['', Validators.required]
+    })
   }
-  test(){
-    console.log("Entrando no jogo");
-    this.navCtrl.push(Menu02Page);
+  login(){
+    let{nome, senha} = this.loginForm.controls;
+    
+    if(!this.loginForm.valid){
+      if(!nome.valid){
+        this.errorNome = true;
+        this.messageNome = "Usuário inválido!"
+      }
+      else{
+        this.messageNome = "";
+      }
+      if(!senha.valid){
+        this.errorSenha = true;
+        this.messageSenha = "Senha inválida!"
+      }
+      else{
+        this.messageSenha = "";
+      }
+    }
+    else{
+      this.messageSenha = "";
+      this.messageNome = "";
+      alert("Login efetuado com sucesso!")
+      this.navCtrl.push(Menu02Page);
+    }
   }
 }

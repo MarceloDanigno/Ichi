@@ -7,19 +7,27 @@ page-login{
     .scroll-content{
         text-align: center;
     }
-    ion-card.card{
-        background: rgba(235,235,235,0.6px);
-        border-radius: 10px;
-    }
     .item{
         background: rgba(235,235,235,0px);
     }
+    .error{
+        color: #ff0000;
+        font-size: 12px;
+    }
+    .oi{
+        font-size: 12px;
+    }
     ion-input{
         border-bottom: black solid 1px;
+    }
+    ion-card.card{
+        background: rgba(235,235,235,0.6px);
+        border-radius: 10px;
     }
     h1{
         color: #ffffef;
         font-size: 5em;
         font-family: 'chiller';
     }
+    
 }

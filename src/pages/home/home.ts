@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import {CadastroPage} from '../cadastro/cadastro';
 import {Menu01Page} from '../menu01/menu01';
+//import {Menu02Page} from '../Menu02/Menu02';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

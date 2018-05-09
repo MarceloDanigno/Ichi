@@ -104,6 +104,7 @@ export class CadastroPage{
   }); */   
     console.log(user)
     console.log(usuario);
+    //save user with sessionstorage
     this.navCtrl.push(game);
   }
    

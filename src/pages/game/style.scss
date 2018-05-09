@@ -1,12 +1,12 @@
-.content
+.game_content
 {
 	background-color: white; /*background color */
 }
-.newcolor
+.game_newcolor
 {
 	background-color: red;
 }
-.select
+.game_select
 {
 	background-color: grey;
 	padding-top: 10px;
@@ -19,7 +19,7 @@
 	z-index: -1;
 	/*pointer-events: none; */
 }
-.cards
+.game_cards
 {
 	background-color: lightgrey;
 	position: relative;
@@ -33,7 +33,7 @@
 	z-index: -1;
 	/*pointer-events: none;*/
 }
-.current
+.game_current
 {
 	background-color: lightblue;
 	position: relative;
@@ -47,7 +47,7 @@
 	z-index: -1;
 	/*pointer-events: none;*/
 }
-.card
+.game_card
 {
 	position: absolute;/*pointer-events: none;*/
 	width: 100px;

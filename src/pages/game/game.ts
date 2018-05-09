@@ -34,7 +34,7 @@ export class  game
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8004');
+			 	this.socket = new WebSocket('ws://localhost:8005');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
 			 	function requirestart(event)
@@ -125,7 +125,7 @@ export class  game
 		    that.cardtoadd = null;
 			that.hand.push(cartaadd);
 			var htmlstring = ((cartaadd.number).toString(10)) + cartaadd.color;
-			var string = '<ion-img class="card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+			var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
 			that.cardfield.nativeElement.insertAdjacentHTML('beforeend', string);
 			//creates an html element in the end of children list
 			that.cardfield.nativeElement.children[that.numcards - 1].addEventListener("click",(event: Event) =>{that.selectshow(event);});
@@ -175,7 +175,7 @@ export class  game
 			if ((posX >= (locationcard - 5)) && (posX <= (locationcard + 100 + 5))) //get card to remove
 			{
 				cardtoremove = this.selectcards[i];
-				break;
+				break; //make it continue so it stops on the one with the highest z-axis
 			}
 			currentsum = currentsum + locationsum;
 			i= i+1;
@@ -212,7 +212,7 @@ export class  game
 		this.currentfield.nativeElement.innerHTML = ""; 
 		this.currentcard = this.cardtoplay;
 		var htmlstring = ((this.cardtoplay.number).toString(10)) + this.cardtoplay.color;
-		var string = '<ion-img class="card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+		var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
 		this.currentfield.nativeElement.insertAdjacentHTML('beforeend', string);
 		this.screenwidth = (this.currentfield.nativeElement.offsetWidth);
 		var locationsum = ((this.screenwidth - 100)/(2));

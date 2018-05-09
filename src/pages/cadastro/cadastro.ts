@@ -22,7 +22,7 @@ export class CadastroPage{
   messageSenha = "";
   messageSenha2 = "";
   
-  constructor(public navCtrl: NavController,formBuilder: FormBuilder,private http: HTTP){
+  constructor(public navCtrl: NavController,formBuilder: FormBuilder){
     this.cadastroForm = formBuilder.group({
       nome: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(16),
         Validators.required])],
@@ -86,7 +86,7 @@ export class CadastroPage{
     alert("Cadastro realizado com sucesso!");
     var user = {"nickname": (this.Nome), "email": (this.Email), "senha": Md5.hashStr(this.Senha)};
     var usuario: string= JSON.stringify(user);
-    this.http.post('http://localhost:8000', {"usuario" : usuario}, {'Content-Type': 'application/x-www-form-urlenconded;chartset=utf-8;'})
+    /*this.http.post('http://localhost:8000', {"usuario" : usuario}, {'Content-Type': 'application/x-www-form-urlenconded;chartset=utf-8;'})
     .then(data => {
 
     console.log(data.status);
@@ -100,7 +100,7 @@ export class CadastroPage{
     console.log(error.error); // error message as string
     console.log(error.headers);
 
-  });    
+  }); */   
     console.log(user)
     console.log(usuario);
     //this.navCtrl.push("MarceloPage");

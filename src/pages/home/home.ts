@@ -13,17 +13,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController) {
   }
-<<<<<<< HEAD
-
-gamepage()
-{
-	this.navCtrl.push(game)
-}
-
-=======
   test(){
     console.log("Indo para menu01");
     this.navCtrl.push(Menu01Page);
   }
->>>>>>> origin/master
 }

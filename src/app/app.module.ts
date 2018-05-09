@@ -15,14 +15,11 @@ import { Menu02Page} from '../pages/Menu02/Menu02';
   declarations: [
     MyApp,
     HomePage,
-<<<<<<< HEAD
-    game
-=======
+    game,
     LoginPage,
     CadastroPage,
     Menu01Page,
     Menu02Page
->>>>>>> origin/master
   ],
   imports: [
     BrowserModule,
@@ -32,14 +29,11 @@ import { Menu02Page} from '../pages/Menu02/Menu02';
   entryComponents: [
     MyApp,
     HomePage,
-<<<<<<< HEAD
-    game
-=======
+    game,
     LoginPage,
     CadastroPage,
     Menu01Page,
     Menu02Page
->>>>>>> origin/master
   ],
   providers: [
     StatusBar,

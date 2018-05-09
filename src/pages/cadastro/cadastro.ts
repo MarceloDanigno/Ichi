@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams} from 'ionic-angular';
 import { FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import { HTTP } from '@ionic-native/http';
+import { game } from '../game/game';
 
 @Component({
   selector: 'page-cadastro',
@@ -103,7 +104,7 @@ export class CadastroPage{
   }); */   
     console.log(user)
     console.log(usuario);
-    //this.navCtrl.push("MarceloPage");
+    this.navCtrl.push(game);
   }
    
   }

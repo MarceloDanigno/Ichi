@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+import { game } from '../pages/game/game';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
@@ -14,6 +15,7 @@ import { Menu02Page} from '../pages/Menu02/Menu02';
   declarations: [
     MyApp,
     HomePage,
+    game,
     LoginPage,
     CadastroPage,
     Menu01Page,
@@ -27,6 +29,7 @@ import { Menu02Page} from '../pages/Menu02/Menu02';
   entryComponents: [
     MyApp,
     HomePage,
+    game,
     LoginPage,
     CadastroPage,
     Menu01Page,

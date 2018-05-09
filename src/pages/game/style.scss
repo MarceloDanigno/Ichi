@@ -1,0 +1,61 @@
+.game_content
+{
+	background-color: white; /*background color */
+}
+.game_newcolor
+{
+	background-color: red;
+}
+.game_select
+{
+	background-color: grey;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px; 
+	margin: 0px 0px 0px 0px;
+	height: 161px;
+	max-width: 100%;
+	z-index: -1;
+	/*pointer-events: none; */
+}
+.game_cards
+{
+	background-color: lightgrey;
+	position: relative;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px; 
+	margin: 0px 0px 0px 0px;
+	height: 161px;
+	max-width: 100%;
+	z-index: -1;
+	/*pointer-events: none;*/
+}
+.game_current
+{
+	background-color: lightblue;
+	position: relative;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-right: 0px;
+	padding-left: 0px; 
+	margin: 0px 0px 0px 0px;
+	height: 161px;
+	max-width: 100%;
+	z-index: -1;
+	/*pointer-events: none;*/
+}
+.game_card
+{
+	position: absolute;/*pointer-events: none;*/
+	width: 100px;
+	background: #eee0;
+	height: auto;
+	left: 0px;
+	right: 0px;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+	z-index: 0; /* make ts as adding images add this for every image and also change left and right of every image */
+}

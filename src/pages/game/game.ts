@@ -23,6 +23,7 @@ export class  game
 	socket: any = null;
 	cardtoplay: any = null;
 	currentcard: any = null;
+	usuario: any = sessionStorage.getItem('usuario');
 	constructor(public navCtrl: NavController, platform:Platform) 
 	{
 		/*variable declarations and start-up*/ 
@@ -31,35 +32,49 @@ export class  game
 		{
 				this.screenwidth = 0;
 				this.numcards = 0;
+				console.log(this.usuario)
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8005');
+			 	this.socket = new WebSocket('ws://localhost:8036');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
-			 	function requirestart(event)
+			 	function requirestart(event,that)
 				{
-				    socketplace.send('start');
+				    socketplace.send(JSON.stringify({"action" :"start","user":that.usuario}));
 				};
 				function getdata(event,that)
 				{
 					var action = JSON.parse(event.data);
 					console.log(action);
-					if (action.type == "state")
+					if (action.type == "free")
 					{
-						if (action.data == "true")
+						console.log("guess im here");
+						console.log(action.player);
+						console.log(that.usuario);
+						if (action.player == that.usuario)
 						{
-							that.boolplay = true;
-						}
-						else
-						{
-							that.boolplay = false;
+							console.log("got in here")
+							if (action.data == "true")
+							{
+								console.log("got in here2222")
+								that.boolplay = true;
+							}
+							else
+							{
+								that.boolplay = false;
+							}
 						}
 					}
 					else if (action.type == "draw")
 					{
 						that.cardtoadd = action.data;
 						console.log(that.cardtoadd);
+					}
+					else if (action.type == "update")
+					{
+						that.cardtoplay = action.data;
+						that.playcard();
 					}
 					else
 					{
@@ -68,15 +83,16 @@ export class  game
 						that.drawcard(7);
 					}
 				};
-				this.socket.addEventListener('open', requirestart);
+				this.socket.addEventListener('open', (event: Event) => {requirestart(event,this)});
 				this.socket.addEventListener('message', (event: Event) => {getdata(event,this)});
-				this.boolplay = true; //prototype, server will send this
-				//end code
+				this.boolplay = true //para que possa comprar as primeiras cartas
 		});
 	}
 	selectshow(event)
 	{
 		var posX = event.clientX;
+		console.log(this.boolplay);
+		console.log(this.usuario);
 		this.screenwidth = (this.cardfield.nativeElement.offsetWidth);
 		this.selectfield.nativeElement.innerHTML = ""; //clears selectfield
 		var locationsum = ((this.screenwidth - 100)/(this.numcards + 1));
@@ -143,7 +159,7 @@ export class  game
 		  }
 		}
 		var cont = times;
-		if (cont > 0)
+		if (cont > 0 && this.boolplay == true)
 		{
 			if (this.booldrawlock == false)
 			{
@@ -153,10 +169,14 @@ export class  game
 				this.numcards = this.numcards + 1;
 				var locationsum = ((this.screenwidth - 100)/(this.numcards + 1)); 
 				var currentsum = locationsum + 50; //curentsum minumum value = 100
-				this.socket.send("draw");
+				this.socket.send(JSON.stringify({"action" :"draw","user":this.usuario}));
 				wait(this,(cont - 1));//sets the context
 			}
-		} 
+		}
+		else
+		{
+			this.boolplay = false;
+		}
 	}
 	removecard(event)
 	{
@@ -174,8 +194,7 @@ export class  game
 			locationcard = currentsum - 50;
 			if ((posX >= (locationcard - 5)) && (posX <= (locationcard + 100 + 5))) //get card to remove
 			{
-				cardtoremove = this.selectcards[i];
-				break; //make it continue so it stops on the one with the highest z-axis
+				cardtoremove = this.selectcards[i]; //make it continue so it stops on the one with the highest z-axis
 			}
 			currentsum = currentsum + locationsum;
 			i= i+1;
@@ -186,7 +205,7 @@ export class  game
 	    var numbercard = text[0];
 	    var colorcard = text.slice(1,lenght);
 	    this.cardtoplay = { "number" : numbercard , "color": colorcard };
-		if ((this.cardtoplay.number == this.currentcard.number) || (this.cardtoplay.color == this.currentcard.color))
+		if (((this.cardtoplay.number == this.currentcard.number) || (this.cardtoplay.color == this.currentcard.color)) && this.boolplay == true)
 		{
 			this.selectfield.nativeElement.innerHTML = ""; //clears selectfield
 		    this.selectcards = []; // both of these lines also in the boolreturn == "False" code
@@ -204,7 +223,8 @@ export class  game
 				currentsum = currentsum + locationsum;
 				i = i + 1;
 		  	}
-		  	this.playcard();
+		  	this.socket.send(JSON.stringify({"action" :"playcard","user":this.usuario,"card": this.cardtoplay}));
+		  	this.boolplay = false;
 		}
 	}
 	playcard()
@@ -234,23 +254,4 @@ export class  game
   		/* setup code and boolean variables */
 		  this.ioncontent._elementRef.nativeElement.style.backgroundColor = "white";
 	}
-	colorchange () 
-	{
-	  	var backgroundcolor = this.ioncontent._elementRef.nativeElement.style.backgroundColor;
-	    if (backgroundcolor == "white")
-	    {
-	    	this.ioncontent._elementRef.nativeElement.style.backgroundColor = "lightblue"
-	    }
-	    else
-	    {
-	    	if (backgroundcolor == "lightblue")
-	    	{
-	    			this.ioncontent._elementRef.nativeElement.style.backgroundColor = "grey"
-	    	}
-	    	else
-	    	{
-	    			this.ioncontent._elementRef.nativeElement.style.backgroundColor = "white"
-	    	}
-	    }
- 	}
 }

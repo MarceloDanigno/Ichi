@@ -103,8 +103,7 @@ export class CadastroPage{
 
   }); */   
     console.log(user)
-    console.log(usuario);
-    //save user with sessionstorage
+    sessionStorage.setItem('usuario', user.nickname);
     this.navCtrl.push(game);
   }
    

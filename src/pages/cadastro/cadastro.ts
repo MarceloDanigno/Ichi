@@ -99,6 +99,7 @@ export class CadastroPage{
             $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();
         }
     });
+    sessionStorage.setItem('usuario', user.nickname);
     this.navCtrl.push(Menu02Page);
   }
    

@@ -3,8 +3,10 @@
 
 <ion-content padding #content class='game_content'>
 
-  <button ion-button (click)="drawcard(1)">Draw card</button>
-  
+  <div>
+    <button ion-button (click)="drawcard(1,false)">Draw card</button>
+    <button ion-button (click)="passturn()">Pass</button>
+  </div>
   <p> Current Card Space</p>
   <div class="game_current" #current>
   </div>

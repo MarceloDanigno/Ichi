@@ -55,7 +55,7 @@ export class  game
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8220');
+			 	this.socket = new WebSocket('ws://localhost:8227');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
 			 	function requirestart(event,that)
@@ -190,12 +190,21 @@ export class  game
 						{
 							var cont1 = 0;
 							var deck3 = JSON.parse(sessionStorage.getItem(that.usuario));
-							while ((cont1 < action.draw)&&(action.user != that.usuario))
+							var usuariotemp = that.usuario;
+							console.log("logs:");
+							console.log(action.player);
+							console.log(usuariotemp);
+							console.log(cont1);
+							console.log(action.draw);
+							while ((cont1 < action.draw)&&(action.player != that.usuario))
 							{
 								deck3.pop(); //tira a carta de cima... ultima carta?
 								cont1 = cont1 + 1
 							}
-							sessionStorage.setItem(that.usuario, JSON.stringify(deck3));
+							console.log("oi dabi");
+							console.log(deck3);//abc
+							console.log("oi dabi");
+							sessionStorage.setItem(usuariotemp, JSON.stringify(deck3));
 							var playercards2 = JSON.parse(sessionStorage.getItem('playercards'));
 							playercards2[that.currentplayer] = playercards2[that.currentplayer] + action.draw;
 							sessionStorage.setItem('playercards', JSON.stringify(playercards2));

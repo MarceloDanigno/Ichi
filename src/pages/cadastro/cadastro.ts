@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import { FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import { HTTP } from '@ionic-native/http';
-import { game } from '../game/game';
+//import { game } from '../game/game';
+import { Menu02Page } from '../Menu02/Menu02';
 
 @Component({
   selector: 'page-cadastro',
@@ -23,7 +24,7 @@ export class CadastroPage{
   messageSenha = "";
   messageSenha2 = "";
   
-  constructor(public navCtrl: NavController,formBuilder: FormBuilder){
+  constructor(public navCtrl: NavController,formBuilder: FormBuilder, private http: HTTP){
     this.cadastroForm = formBuilder.group({
       nome: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(16),
         Validators.required])],
@@ -85,28 +86,22 @@ export class CadastroPage{
     this.messageNome = "";
     this.Confirma = false;
     alert("Cadastro realizado com sucesso!");
-    var user = {"nickname": (this.Nome), "email": (this.Email), "senha": Md5.hashStr(this.Senha)};
+    var user = {nickname: (this.Nome), email: (this.Email), senha: Md5.hashStr(this.Senha)};
     var usuario: string= JSON.stringify(user);
-    /*this.http.post('http://localhost:8000', {"usuario" : usuario}, {'Content-Type': 'application/x-www-form-urlenconded;chartset=utf-8;'})
-    .then(data => {
-
-    console.log(data.status);
-    console.log(data.data); // data received by server
-    console.log(data.headers);
-
-    })
-    .catch(error => {
-
-    console.log(error.status);
-    console.log(error.error); // error message as string
-    console.log(error.headers);
-
-  }); */   
-    console.log(user)
-    console.log(usuario);
-    //save user with sessionstorage
-    this.navCtrl.push(game);
+    var data = {nickname: $('#user-nickname').val(), email: $('#user-email').val(), password: $.md5($('#user-password').val())};
+    $.ajax({
+        type : "POST",
+        dataType: "json",
+        url : "http://127.0.0.1:5000/Users/Insert/",
+        data: JSON.stringify(data),
+        contentType: 'application/json;charset=UTF-8',
+        success: function(result) {
+            $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();
+        }
+    });
+    this.navCtrl.push(Menu02Page);
   }
    
   }
 }
+  

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {Menu01Page} from '../menu01/menu01';
 //import {Menu02Page} from '../Menu02/Menu02';
-
-import { game } from '../game/game';
+//import { game } from '../game/game';
+import { LoginPage } from '../login/login';
+import { CadastroPage} from '../cadastro/cadastro';
 
 @Component({
   selector: 'page-home',
@@ -13,8 +13,10 @@ export class HomePage {
 
   constructor(public navCtrl: NavController) {
   }
-  test(){
-    console.log("Indo para menu01");
-    this.navCtrl.push(Menu01Page);
+  login(){
+    this.navCtrl.push(LoginPage);
+  }
+  cadastro(){
+    this.navCtrl.push(CadastroPage);
   }
 }

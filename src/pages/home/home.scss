@@ -2,5 +2,14 @@ page-home {
     ion-content{    
         background-image: url("/assets/imgs/Wallpaper.jpg") !important;
         background-size: 100% 100%;
- }
+    }
+    ion-card.card{
+        background: rgba(235,235,235,0.6px);
+        border-radius: 10px;
+        margin: 25% auto auto auto;
+    }
+    .item{
+        background: rgba(235,235,235,0px);
+    }   
+
 }

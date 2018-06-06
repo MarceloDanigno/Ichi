@@ -1,3 +1,15 @@
-<ion-content padding scrollbar-y-auto >
-  <img src="/assets/imgs/ichilogo.png" (click)="test()" />
+<ion-content padding >
+  <img src="/assets/imgs/ichilogo.png"/>
+  <ion-card>
+    <ion-card-content>
+      <ion-list no-lines>
+        <ion-item>
+          <button ion-button full color = "dark" block (click) = "login()"> Entrar</button>
+        </ion-item>
+        <ion-item>
+          <button ion-button full color = "dark" block (click) = "cadastro()"> Cadastrar </button> 
+        </ion-item>
+      </ion-list> 
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -5,6 +5,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import { HTTP } from '@ionic-native/http';
 //import { game } from '../game/game';
 import { Menu02Page } from '../Menu02/Menu02';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'page-cadastro',
@@ -88,12 +89,12 @@ export class CadastroPage{
     alert("Cadastro realizado com sucesso!");
     var user = {nickname: (this.Nome), email: (this.Email), senha: Md5.hashStr(this.Senha)};
     var usuario: string= JSON.stringify(user);
-    var data = {nickname: $('#user-nickname').val(), email: $('#user-email').val(), password: $.md5($('#user-password').val())};
+    //var data = {nickname: $('#user-nickname').val(), email: $('#user-email').val(), password: $.md5($('#user-password').val())};
     $.ajax({
         type : "POST",
         dataType: "json",
         url : "http://127.0.0.1:5000/Users/Insert/",
-        data: JSON.stringify(data),
+        data: usuario,
         contentType: 'application/json;charset=UTF-8',
         success: function(result) {
             $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();

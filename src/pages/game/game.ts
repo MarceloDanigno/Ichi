@@ -55,7 +55,7 @@ export class  game
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8227');
+			 	this.socket = new WebSocket('ws://localhost:8231');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
 			 	function requirestart(event,that)

@@ -3,15 +3,17 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
 import { MyApp } from './app.component';
 import { game } from '../pages/game/game';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
-import { Menu01Page} from '../pages/menu01/menu01';
 import { Menu02Page} from '../pages/Menu02/Menu02';
+import { SalaPage} from '../pages/Sala/Sala';
+import { ConfigPage } from '../pages/Config/Config';
 import { HTTP } from '@ionic-native/http';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -19,8 +21,9 @@ import { HTTP } from '@ionic-native/http';
     game,
     LoginPage,
     CadastroPage,
-    Menu01Page,
-    Menu02Page
+    Menu02Page,
+    SalaPage,
+    ConfigPage
   ],
   imports: [
     BrowserModule,
@@ -33,8 +36,9 @@ import { HTTP } from '@ionic-native/http';
     game,
     LoginPage,
     CadastroPage,
-    Menu01Page,
-    Menu02Page
+    Menu02Page,
+    SalaPage,
+    ConfigPage
   ],
   providers: [
     StatusBar,

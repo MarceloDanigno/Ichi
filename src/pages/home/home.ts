@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 //import {Menu02Page} from '../Menu02/Menu02';
-
-import { game } from '../game/game';
+//import { game } from '../game/game';
 import { LoginPage } from '../login/login';
 import { CadastroPage} from '../cadastro/cadastro';
 

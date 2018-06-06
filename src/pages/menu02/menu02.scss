@@ -2,14 +2,49 @@ page-menu02 {
     ion-content{    
         background-image: url("/assets/imgs/FUNDO.jpg");
         background-size: 100% 100%;
-        .div{
-            margin: 20px 100%;
+        .menu02_info{
+            width: 80%;
+            height: auto;
+            position: absolute;
+            z-index: 0;
         }
-        .modos{
-            margin: 100px 42.5px;
+        .menu02_config{
+            width: 20%;
+            height: auto;
+            position: absolute;
+            z-index: 1;
+            left: 80%;
+            top: 10%;
         }
-        .criar{
-            margin: 100px 40px;
+        .menu02_div{
+            width: 100%;
+            height: 20%;
+            position: relative;
+        }
+        .menu02_modo1{
+            left: 10%;
+            width: 37.5%;
+            height: auto;
+            position: absolute;
+        }
+        .menu02_modo2{
+            width: 37.5%;
+            height: auto;
+            right: 10%;
+            position: absolute;
+        }
+        .menu02_div2{
+            top: 15%;
+            width: 100%;
+            height: 20%;
+            position: relative;
+        }
+        .menu02_criar{
+            width: 87%;
+            height: auto;
+            position: absolute;
+            top: 85%;
+            left: 8%;
         }
     }
 }

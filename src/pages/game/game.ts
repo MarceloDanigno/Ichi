@@ -55,7 +55,7 @@ export class  game
 				console.log(this.ioncontent); 
 				console.log('Width: ' + platform.width());
 			 	console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8231');
+			 	this.socket = new WebSocket('ws://localhost:8327');
 			 	const socketplace = this.socket;
 			 	console.log(socketplace);
 			 	function requirestart(event,that)
@@ -331,6 +331,90 @@ export class  game
 			wait(this,(cont));//sets the context
 		}
 	}
+	updatecards(event) //código para dar um refresh na ordem que o hand está
+	{
+		console.log("Sorting...");
+		this.screenwidth = (this.cardfield.nativeElement.offsetWidth);
+		var currentzindex = 0;
+		var locationsum = ((this.screenwidth - 100)/(this.numcards + 1)); 
+		var currentsum = locationsum + 50; //curentsum minumum value = 100
+		var cartaadd = null;
+		this.cardfield.nativeElement.innerHTML = "";
+		for (var h = 0; h < this.hand.length; h++)  //trocar isso
+		{
+			cartaadd = this.hand[h];
+			var htmlstring = ((cartaadd.number).toString(10)) + cartaadd.color;
+			var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+			this.cardfield.nativeElement.insertAdjacentHTML('beforeend', string);
+			this.cardfield.nativeElement.children[h].addEventListener("click",(event: Event) =>{this.selectshow(event);});
+		}
+		let i: number = 0;
+		while(i < (this.numcards))
+		{ // also works -> var cards = this.cardfield.nativeElement.querySelectorAll('.card')
+			this.cardfield.nativeElement.children[i].style.left = ((currentsum - 50).toString(10)) + "px";
+			this.cardfield.nativeElement.children[i].style.zIndex = i;
+			currentsum = currentsum + locationsum;
+			i = i + 1;
+	  	}	
+	}
+	sortcards(event)
+	{
+		var cont=0;
+		var MAIOR=0;
+		console.log(this.hand);
+		while (cont<this.hand.length){
+			if (MAIOR<this.hand[cont].number){
+				MAIOR=this.hand[cont].number;
+			}
+			cont+=1;
+		}
+		var contadores=[];
+		for (var i =  0; i <= MAIOR; i++) 
+		{
+			contadores.push(0);
+		}
+		cont=0;
+		while (cont<this.hand.length){
+			contadores[this.hand[cont].number]+=1
+			cont+=1;
+		}	
+		console.log(contadores);
+		var ordenado = [];
+		//for (var k =  0; k < this.hand.length; k++) 
+		//{
+		//	ordenado.push(0);
+		//}
+		cont=0;
+		var cont2;
+		var x;
+
+		while (cont<=this.hand.length+1){
+			cont2=0;
+			while (cont2<contadores[cont]){
+				ordenado.push(cont);
+				cont2+=1;
+			}
+			cont+=1;
+		}
+
+		cont=0;
+		var LISTA=[];
+		var numeropass=this.hand.length;
+		while(cont<numeropass){
+			var percorre=0;
+			while (percorre<this.hand.length){
+				if (this.hand[percorre].number==ordenado[cont]){
+					LISTA.push(this.hand[percorre]);
+					this.hand.splice(percorre, 1);
+					break;
+				}
+				percorre+=1;
+			}
+			cont+=1;
+		}
+		this.hand = LISTA;
+		this.updatecards(event);
+	}
 	removecard(event)//tem código de socket no final, mudar um pouco
 	{
     	//branch to different code when used cardfield or change this.numcardsselect 
@@ -367,7 +451,7 @@ export class  game
 			var locationsum = ((this.screenwidth - 100)/(this.numcards + 1)); 
 			var currentsum = locationsum + 50; //curentsum minumum value = 50
 			this.cardfield.nativeElement.children[cardtoremove].remove();
-			this.hand.splice(cardtoremove, 1);
+			this.hand.splice(cardtoremove, 1); // CÓDIGO DE UPDATE USA, OLHAR CASO ERRO 
 			i = 0;
 			while(i < (this.numcards))
 			{ 

@@ -44,7 +44,6 @@ export class LoginPage {
     else{
       this.messageSenha = "";
       this.messageNome = "";
-      alert("Login efetuado com sucesso!")
       this.navCtrl.push(Menu02Page);
     }
   }

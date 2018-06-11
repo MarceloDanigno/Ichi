@@ -1,6 +1,67 @@
 page-sala {
     ion-content{
-        background-image: url("/assets/imgs/Sala.jpg");
+        background-image: url("/assets/imgs/FUNDO.jpg");
         background-size: 100% 100%;
+    }
+    .sala_return{
+        width: 25%;
+        height: auto;
+    }
+    .sala_invite{
+        left: 15%;
+        width: 30%;
+        height: auto;
+        position: absolute;
+    } 
+    .sala_gear{
+        right: 15%;
+        width: 30%;
+        height: auto;
+        position: absolute;
+    }
+    .sala_div{
+        position: relative;
+    }
+    .sala_player1{
+        width: 40%;
+        height: auto;
+        top: 35%;
+        position: absolute;
+        left: 10%;
+    }
+    .sala_player2{
+        width: 40%;
+        height: auto;
+        top: 35%;
+        right: 10%;
+        position: absolute;
+    }
+    .sala_player3{
+        width: 40%;
+        height: auto;
+        top: 55%;
+        left: 10%;
+        position: absolute;
+    }
+    .sala_player4{
+        width: 40%;
+        height: auto;
+        top: 55%;
+        right: 10%;
+        position: absolute;
+    }
+    .sala_player5{
+        width: 40%;
+        height: auto;
+        top: 75%;
+        left: 10%;
+        position: absolute;
+    }
+    .sala_player6{
+        width: 40%;
+        height: auto;
+        top: 75%;
+        right: 10%;
+        position: absolute;
     }
 }

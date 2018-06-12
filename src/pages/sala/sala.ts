@@ -18,6 +18,24 @@ export class SalaPage {
     this.navCtrl.push( ConfigPage );
   }
   invite(){
-    console.log(" oi ");
+    console.log("invite");
+  }
+  jogador1(){
+    console.log("jogador1");
+  }
+  jogador2(){
+    console.log("jogador2");
+  }
+  jogador3(){
+    console.log("jogador3");
+  }
+  jogador4(){
+    console.log("jogador4");
+  }
+  jogador5(){
+    console.log("jogador5");
+  }
+  jogador6(){
+    console.log("jogador6");
   }
 }

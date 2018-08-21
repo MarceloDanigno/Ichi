@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
-import { HTTP } from '@ionic-native/http';
 import { Menu02Page } from '../Menu02/Menu02';
 import * as $ from 'jquery';
 
@@ -12,9 +11,11 @@ import * as $ from 'jquery';
 })
 
 
+
 export class CadastroPage{
     
   public cadastroForm: any;
+  socket: any = null;
   errorNome = false;
   errorSenha = false;
   errorSenha2= false;
@@ -23,8 +24,7 @@ export class CadastroPage{
   messageNome = "";
   messageSenha = "";
   messageSenha2 = "";
-  
-  constructor(public navCtrl: NavController,formBuilder: FormBuilder, private http: HTTP){
+  constructor(public navCtrl: NavController,formBuilder: FormBuilder){
     this.cadastroForm = formBuilder.group({
       nome: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(16),
         Validators.required])],
@@ -79,57 +79,60 @@ export class CadastroPage{
     else{
       this.Confirma = false;
     }
-    /*function CheckEmail(email) {
-      var data = {email: email};
-      $.ajax({
-          type : "POST",
-          dataType: "json",
-          url : 'http://127.0.0.1:5000/Users/CheckEmail/',
-          data: JSON.stringify(data),
-          contentType: 'application/json;charset=UTF-8',
-          success: function(result) {
-              $('#CheckEmail').children('#result').hide().html(JSON.stringify(result)).show();
-          }
-      });
-  }
-  
-  function CheckNickname(nickname) {
-      var data = {nickname: nickname};
-      $.ajax({
-          type : "POST",
-          dataType: "json",
-          url : 'http://127.0.0.1:5000/Users/CheckNickname/',
-          data: JSON.stringify(data),
-          contentType: 'application/json;charset=UTF-8',
-          success: function(result) {
-              $('#CheckNickname').children('#result').hide().html(JSON.stringify(result)).show();
-          }
-      });
-  }
-  */
-  }else{    //Passou pelas verificações
+  }else{    //Passou pelas verificações iniciais
     this.messageEmail = "";
     this.messageSenha = "";
     this.messageSenha2 = "";
     this.messageNome = "";
     this.Confirma = false;
-    alert("Cadastro realizado com sucesso!");
-    var user = {nickname: (this.Nome), email: (this.Email), password: Md5.hashStr(this.Senha)};
-    var usuario: string= JSON.stringify(user);
-    //var data = {nickname: $('#user-nickname').val(), email: $('#user-email').val(), password: $.md5($('#user-password').val())};
+   
+//------------VERIFICAÇÃO DE E-MAIL--------------------------------------------------------   
+
+//var data = {email: $('#check-email').val()}; modelo de dado a ser enviado
+    
+    var Email = {email: (this.Email)};
+    
+    $.ajax({ //função para checar o e-mail
+      type : "POST",
+      dataType: "json",
+      url : 'http://127.0.0.1:5000/Users/CheckEmail/',
+      data: JSON.stringify(Email),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(result) {
+          $('#CheckEmail').children('#result').hide().html(JSON.stringify(result)).show();
+      }
+  });
+    
+//----------------------VERIFICAÇÃO DE NICKNAME-----------------------------------------------
+//var data = {nickname: $('#check-nickname').val()}; modelo de dado a ser enviado
+    var NICKNAME = {nickname: (this.Nome)};
+   /* $({
+      socket = io.connect('http://127.0.0.1:5000');
+    }); */
     $.ajax({
-        type : "POST",
-        dataType: "json",
-        url : "http://127.0.0.1:5000/Users/Insert/",
-        data: usuario,
-        contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-            console.log(result);
-            $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();
-        }
-    });
-    sessionStorage.setItem('usuario', user.nickname);
-    this.navCtrl.push(Menu02Page);
+      type : "POST",
+      dataType: "json",
+      url : 'http://127.0.0.1:5000/Users/CheckNickname/',
+      data: JSON.stringify(NICKNAME),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(result) {
+          $('#CheckNickname').children('#result').hide().html(JSON.stringify(result)).show();
+    }
+}); 
+    var user = {nickname: (this.Nome), email: (this.Email), password: Md5.hashStr(this.Senha), socket_id: "socket"};
+    
+    //-----------------------CADASTRO DE USUÁRIO-------------------------------------------------
+    $.ajax({ //função para cadastrar o usuário
+      type : "POST",
+      dataType: "json", 
+      url : "http://127.0.0.1:5000/Register/",
+      data: JSON.stringify(user),
+      contentType: 'application/json;charset=UTF-8',
+      success: function(result) {
+          $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();
+      }
+  }); 
+    alert("Cadastro realizado com sucesso!");
   }
   }
 }

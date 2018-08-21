@@ -11,6 +11,7 @@ import { CadastroPage } from '../pages/cadastro/cadastro';
 import { Menu02Page} from '../pages/Menu02/Menu02';
 import { SalaPage} from '../pages/Sala/Sala';
 import { ConfigPage } from '../pages/Config/Config';
+import { RegistPage } from '../pages/Regist/Regist';
 import { HTTP } from '@ionic-native/http';
 
 
@@ -23,7 +24,8 @@ import { HTTP } from '@ionic-native/http';
     CadastroPage,
     Menu02Page,
     SalaPage,
-    ConfigPage
+    ConfigPage,
+    RegistPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { HTTP } from '@ionic-native/http';
     CadastroPage,
     Menu02Page,
     SalaPage,
-    ConfigPage
+    ConfigPage,
+    RegistPage
   ],
   providers: [
     StatusBar,

@@ -1,26 +1,38 @@
 <ion-header>
 </ion-header>
 
-<ion-content padding #content class='game_content'>
+<ion-content no-bounce padding #content class='game_content'>
 
-  <div>
-    <button ion-button (click)="drawcard(1,false)">Draw card</button>
-    <button ion-button (click)="passturn()">Pass</button>
-    <button ion-button (click)="sortcards()">Sort Hand</button>
-    <p #time>Time:--</p>
-  </div>
-  <p> Current Card Space</p>
-  <div class="game_current" #current>
+  <div class="game_staticspace">
+
+    <div #box1 class="game_box1">
+      <p #cards1 class="game_cards1">0</p>
+    </div>
+    <div #box2 class="game_box2">
+      <p #cards2 class="game_cards2">0</p>
+    </div>
+    <p #name1 class="game_name1"></p>
+    <p #name2 class="game_name2"></p>
+    <p #baralho class="game_baralho" (click) = "drawcard(1,false)" >0</p>
+
+    <img src="/assets/imgs/barraplay.png" class='game_barraplay'/>
+
+    <img src="/assets/imgs/monte.png" (click) = "drawcard(1,false)" class='game_drawpile'/>
+    <img src="/assets/imgs/MODO2.png" (click) = "passturn()" class='game_passturn'/>
+    <img src="/assets/imgs/ordena.png" (click) = "sortcards()" class='game_sortcard'/>
+    <img src="/assets/imgs/sentido.png" class='game_sentido'/>
+
+    <div class="game_current" #current>
+    </div>
+    
+    <p #time class="game_time">Time:--</p>
   </div>
 
-  <p> Select card space</p>
+
   <div class="game_select" #select>
   </div>
 
-  <p> Card space</p>
   <div class="game_cards" #cards>
   </div>
-
-  <p>end page</p>
 
 </ion-content>

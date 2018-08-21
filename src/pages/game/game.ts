@@ -237,12 +237,10 @@ export class  game
 		}
 		if (checkbool == true)
 		{
-			console.log(this.hand[1].number);
-			console.log(this.hand[3].number);
-			console.log(this.hand.length);
 			var cont=0;
 			var MAIOR=0;
-			while (cont<this.hand.length){
+			var handlength = this.hand.length;
+			while (cont<handlength){
 				if (MAIOR<this.hand[cont].number){
 					MAIOR=this.hand[cont].number;
 				}
@@ -254,7 +252,7 @@ export class  game
 				contadores.push(0);
 			}
 			cont=0;
-			while (cont<this.hand.length){
+			while (cont<handlength){
 				contadores[this.hand[cont].number]+=1
 				cont+=1;
 			}	
@@ -263,16 +261,27 @@ export class  game
 			var cont2;
 			var x;
 
-			while (cont<=this.hand.length+1){
-				cont2=0;
-				while (cont2<contadores[cont]){
+			//while (cont<=handlength+1){
+			//	cont2=0;
+			//	while (cont2<contadores[cont]){
+			//		ordenado.push(cont);
+			//		cont2+=1;
+			//	}
+			//	cont+=1;
+			//} fred errou alguma coisa aqui pq no android da bug ?!?
+
+			while (cont < contadores.length)
+			{
+				while (contadores[cont] > 0)
+				{
 					ordenado.push(cont);
-					cont2+=1;
+					contadores[cont] = contadores[cont] - 1;
 				}
-				cont+=1;
+				cont = cont + 1;
 			}
 
 			cont=0;
+			console.log(ordenado)
 			var LISTA=[];
 			var numeropass=this.hand.length;
 			while(cont<numeropass){

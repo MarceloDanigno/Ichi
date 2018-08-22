@@ -16,7 +16,6 @@ export class Menu02Page {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Menu02Page');
   }
   game(){
     this.navCtrl.push( game );

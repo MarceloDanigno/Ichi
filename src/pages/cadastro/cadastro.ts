@@ -15,7 +15,6 @@ import * as $ from 'jquery';
 export class CadastroPage{
     
   public cadastroForm: any;
-  socket: any = null;
   errorNome = false;
   errorSenha = false;
   errorSenha2= false;
@@ -85,13 +84,8 @@ export class CadastroPage{
     this.messageSenha2 = "";
     this.messageNome = "";
     this.Confirma = false;
-   
-//------------VERIFICAÇÃO DE E-MAIL--------------------------------------------------------   
-
-//var data = {email: $('#check-email').val()}; modelo de dado a ser enviado
-    
-    var Email = {email: (this.Email)};
-    
+   //------------VERIFICAÇÃO DE E-MAIL--------------------------------------------------------   
+   var Email = {email: (this.Email)};
     $.ajax({ //função para checar o e-mail
       type : "POST",
       dataType: "json",
@@ -99,16 +93,24 @@ export class CadastroPage{
       data: JSON.stringify(Email),
       contentType: 'application/json;charset=UTF-8',
       success: function(result) {
-          $('#CheckEmail').children('#result').hide().html(JSON.stringify(result)).show();
+        sessionStorage.setItem('resultadoEmail', result.available);
+        /* result{
+              stats --> 0: E-mail vazio ou None ||| 1: E-mail válido.
+              Available --> 0: E-mail não disponível ||| 1: E-mail disponível.
+        */
       }
   });
-    
+  var resultadoEmail = sessionStorage.getItem('resultadoEmail');
+  if(resultadoEmail == '0'){  
+    this.errorEmail = true;
+    this.messageEmail = "E-mail já está sendo utilizado!";
+  }
+  else{
+    this.errorEmail = false;
+    this.messageEmail = "";
+  }
 //----------------------VERIFICAÇÃO DE NICKNAME-----------------------------------------------
-//var data = {nickname: $('#check-nickname').val()}; modelo de dado a ser enviado
     var NICKNAME = {nickname: (this.Nome)};
-   /* $({
-      socket = io.connect('http://127.0.0.1:5000');
-    }); */
     $.ajax({
       type : "POST",
       dataType: "json",
@@ -116,12 +118,22 @@ export class CadastroPage{
       data: JSON.stringify(NICKNAME),
       contentType: 'application/json;charset=UTF-8',
       success: function(result) {
-          $('#CheckNickname').children('#result').hide().html(JSON.stringify(result)).show();
+          sessionStorage.setItem('resultadoNick', result.available);
+        }
+    });
+    var resultadoNick = sessionStorage.getItem('resultadoNick');
+    if(resultadoNick == '0'){
+      this.errorNome = true;
+      this.messageNome = "Nickname já está sendo utilizado!";
     }
-}); 
-    var user = {nickname: (this.Nome), email: (this.Email), password: Md5.hashStr(this.Senha), socket_id: "socket"};
-    
+    else{
+      this.errorNome = false;
+      this.messageNome = "";
+    }
     //-----------------------CADASTRO DE USUÁRIO-------------------------------------------------
+    
+    if(resultadoEmail == resultadoNick && resultadoEmail == '1'){
+      var user = {nickname: (this.Nome), email: (this.Email), password: Md5.hashStr(this.Senha), socket_id: "socket"}; 
     $.ajax({ //função para cadastrar o usuário
       type : "POST",
       dataType: "json", 
@@ -129,11 +141,11 @@ export class CadastroPage{
       data: JSON.stringify(user),
       contentType: 'application/json;charset=UTF-8',
       success: function(result) {
-          $('#InsertUser').children('#result').hide().html(JSON.stringify(result)).show();
+         alert("Cadastro realizado com sucesso!   ");
       }
-  }); 
-    alert("Cadastro realizado com sucesso!");
-  }
+  });
+  } 
+   }
   }
 }
   

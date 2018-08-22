@@ -18,30 +18,25 @@ import * as $ from 'jquery';
 })
 export class ConfigPage {
   senha: any = sessionStorage.getItem('password');
+  iD: any = sessionStorage.getItem('id');
   sair(){
     this.navCtrl.popToRoot();
-     //------------------------------------------LOGOUT-----------------------------------------    
-   /* var data = {id: $('#logout-id').val(), password: $.md5($('#logout-password').val())};
-      var data = {id: ????, password: Md5.hashStr(this.senha)} 
-   $.ajax({ //Função de logout
-        type : "POST",
-        dataType: "json",
-        url : 'http://127.0.0.1:5000/Logout/',
-        data: JSON.stringify(data),
-        contentType: 'application/json;charset=UTF-8',
-        success: function(result) {
-            $('#Logout').children('#result').hide().html(JSON.stringify(result)).show();
-        }
-    }); */ 
+    //------------------------------------------LOGOUT-----------------------------------------    
+
+    var data = {id: this.iD, password: Md5.hashStr(this.senha)} 
+    $.ajax({ //Função de logout
+          type : "POST",
+          dataType: "json",
+          url : 'http://127.0.0.1:5000/Logout/',
+          data: JSON.stringify(data),
+          contentType: 'application/json;charset=UTF-8',
+          success: function(result){
+              console.log(result);
+            }
+      });
   }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfigPage');
-  }
-  PegaDados(){
-    $.get("'http://127.0.0.1:5000/'", function(data, status){
-      alert("Data: " + data + "\nStatus: " + status);
-  });
   }
 }

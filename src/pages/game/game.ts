@@ -1,6 +1,6 @@
 import { Component , ViewChild , AfterViewInit , ElementRef } from '@angular/core';
 import { NavController , Platform } from 'ionic-angular';
-import { Menu02Page } from '../Menu02/Menu02';
+import { Menu02Page } from '../menu02/menu02';
 
 @Component({
   selector: 'game',

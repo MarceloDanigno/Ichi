@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { game } from '../game/game';
-import { SalaPage } from '../Sala/Sala';
-import { ConfigPage } from '../Config/Config';
-import { RegistPage } from '../Regist/Regist';
+import { SalaPage } from '../sala/sala';
+import { ConfigPage } from '../config/config';
+import { RegistPage } from '../regist/regist';
 
 @IonicPage()
 @Component({

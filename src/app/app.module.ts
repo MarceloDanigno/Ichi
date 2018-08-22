@@ -8,10 +8,10 @@ import { game } from '../pages/game/game';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
-import { Menu02Page} from '../pages/Menu02/Menu02';
-import { SalaPage} from '../pages/Sala/Sala';
-import { ConfigPage } from '../pages/Config/Config';
-import { RegistPage } from '../pages/Regist/Regist';
+import { Menu02Page} from '../pages/menu02/menu02';
+import { SalaPage} from '../pages/sala/sala';
+import { ConfigPage } from '../pages/config/config';
+import { RegistPage } from '../pages/regist/regist';
 import { HTTP } from '@ionic-native/http';
 
 

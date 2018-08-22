@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Menu02Page } from '../Menu02/Menu02';
+import { Menu02Page } from '../menu02/menu02';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Md5 } from 'ts-md5/dist/md5';
 import * as $ from 'jquery';

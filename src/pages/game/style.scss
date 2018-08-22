@@ -55,6 +55,24 @@
 	font-family: 'Nanum Brush Script' bold;
 }
 
+.game_vitoria
+{
+	z-index:-501;
+	height:auto;
+	width:100%;
+	opacity:0.0;
+	position: absolute;
+}
+
+.game_derrota
+{
+	z-index:-500;
+	height:auto;
+	width:100%;
+	opacity:0.0;
+	position: absolute;
+}
+
 .game_box1
 {
 	z-index:15;

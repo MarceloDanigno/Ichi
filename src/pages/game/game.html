@@ -15,12 +15,15 @@
     <p #name2 class="game_name2"></p>
     <p #baralho class="game_baralho" (click) = "drawcard(1,false)" >0</p>
 
+    <img #vitoria src="/assets/imgs/vitoria.png" class='game_vitoria' />
+    <img #derrota src="/assets/imgs/derrota.png" class='game_derrota' />
+
     <img src="/assets/imgs/barraplay.png" class='game_barraplay'/>
 
     <img src="/assets/imgs/monte.png" (click) = "drawcard(1,false)" class='game_drawpile'/>
     <img src="/assets/imgs/MODO2.png" (click) = "passturn()" class='game_passturn'/>
     <img src="/assets/imgs/ordena.png" (click) = "sortcards()" class='game_sortcard'/>
-    <img src="/assets/imgs/sentido.png" class='game_sentido'/>
+    <img #sentido src="/assets/imgs/sentido.png" class='game_sentido'/>
 
     <div class="game_current" #current>
     </div>

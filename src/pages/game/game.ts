@@ -21,7 +21,9 @@ export class  game
 	@ViewChild('box1') box1;
 	@ViewChild('box2') box2;
 	@ViewChild('baralho') cartasbaralho;
-	
+	@ViewChild('vitoria') victoryimg;
+	@ViewChild('derrota') loseimg;
+	@ViewChild('sentido') sentidoimg;	
 	// variaveis ainda não separadas
 	screenwidth: number = 0;
 	numcards: number = 0;
@@ -43,6 +45,8 @@ export class  game
 	timerid: any = null;
 	boolsortlock: boolean = false;
 	boolsortlock2: boolean = true;
+	endlock: number = 0;
+	forceend: number = 0;
 	// criar variaveis que controlam quantas cartas cada jogador tem
 
 	// variaveis de controle ao primeiro jogador
@@ -53,7 +57,7 @@ export class  game
 
 	// variaveis de outras páginas
 	usuario: any = sessionStorage.getItem('usuario');
-	roomkey: any = "okdlwo.d";//sessionStorage.getItem('usuario'); //quando tiver sala aqui seria o id da sala
+	roomkey: any = 1500000;//sessionStorage.getItem('usuario'); //quando tiver sala aqui seria o id da sala
 	roomsize: any = 3;//sessionStorage.getItem('roomsize') qaundo tiver sala
 	//
 	constructor(public navCtrl: NavController, platform:Platform,) 
@@ -65,13 +69,14 @@ export class  game
 	}
 	endgame(event) //código para acabar o jogo
 	{
+		this.endlock = 1;
 		var playercards4 = JSON.parse(sessionStorage.getItem((this.usuario + " " + "2")));
 		var numhand = playercards4[this.players.indexOf(this.usuario)]
 		var victory = true
 		let i: number = 0;
 		while (i < ((playercards4.length) - 1))
 		{
-			if (numhand < playercards4[i])
+			if (numhand > playercards4[i])
 			{
 				victory = false
 			}
@@ -79,22 +84,33 @@ export class  game
 		}
 		if (victory == true)
 		{
-			console.log("Player ganhou, mandar mensagem pro banco.")
-		}	
+			var vitoriasatual = sessionStorage.getItem('vitorias');
+			vitoriasatual = vitoriasatual + 1;
+			sessionStorage.setItem('vitorias',vitoriasatual);
+			this.victoryimg.nativeElement.style.zIndex = 500;
+			this.victoryimg.nativeElement.style.opacity = 1;
+			this.victoryimg.nativeElement.addEventListener("click",(event: Event) =>{this.jumppage(event);});
+		}
+		else
+		{
+			var derrotasatual = sessionStorage.getItem('derrotas');
+			derrotasatual = derrotasatual + 1;
+			sessionStorage.setItem('derrotas',derrotasatual);
+			this.loseimg.nativeElement.style.zIndex = 500;
+			this.loseimg.nativeElement.style.opacity = 1;
+			this.loseimg.nativeElement.addEventListener("click",(event: Event) =>{this.jumppage(event);});
+		}
 		this.socket.close()
-		console.log("Figura na frente da tela que ao clicar vai para jumppage.")
 	}
 	jumppage(event)
 	{
-		this.navCtrl.push(Menu02Page);
+		this.navCtrl.pop();
 	}
 	selectshow(event) //não tem código de socket e não tem haver 
 	{
 		if(this.cardfield.nativeElement.children != null)
 		{
 			var posX = event.clientX;
-			console.log(this.boolplay);
-			console.log(this.usuario);
 			this.screenwidth = (this.cardfield.nativeElement.offsetWidth);
 			this.selectfield.nativeElement.innerHTML = ""; //clears selectfield
 			var locationsum = ((this.screenwidth - 100)/(this.numcards + 1));
@@ -174,15 +190,13 @@ export class  game
 		  	}
 		}
 		var cont = times;
-		if ((this.booldrawlock == false && this.boolplay == true)|| (skip == true))
+		if ((this.booldrawlock == false && this.boolplay == true)|| (skip == true) || (this.forceend == 1 && times == 2 && this.boolplay == false))
 		{
 			this.boolsortlock = true;
 			this.booldrawlock = true;
 			if (skip == false)
 			{
 				var deck = JSON.parse(sessionStorage.getItem(this.usuario));
-				console.log(deck.length);
-				console.log(deck);
 				if (deck.length>0)
 				{
 					this.socket.send(JSON.stringify({"end":0,"action": "draw" ,"key": this.roomkey,"roomsize":this.roomsize, "user": this.usuario,"num": times}));
@@ -202,7 +216,6 @@ export class  game
 	}
 	updatecards(event,that) //código para dar um refresh na ordem que o hand está
 	{
-		console.log("Sorting...");
 		that.screenwidth = (that.cardfield.nativeElement.offsetWidth);
 		var currentzindex = 0;
 		var locationsum = ((that.screenwidth - 100)/(that.numcards + 1)); 
@@ -211,7 +224,6 @@ export class  game
 		if (that.boolsortlock == false && that.boolsortlock2 == false)
 		{
 			that.cardfield.nativeElement.innerHTML = "";
-			console.log(that.hand);
 			for (var h = 0; h < that.hand.length; h++)  //trocar isso
 			{
 				cartaadd = that.hand[h];
@@ -224,7 +236,6 @@ export class  game
 				currentsum = currentsum + locationsum;
 			}
 			let i: number = 0;
-			console.log(that.cardfield.nativeElement.children.length)
 			while(i < (that.numcards))
 			{ // also works -> var cards = that.ca
 				//that.cardfield.nativeElement.children[i].style.left = ((currentsum - 50).toString(10)) + "px";
@@ -290,7 +301,6 @@ export class  game
 			}
 
 			cont=0;
-			console.log(ordenado)
 			var LISTA=[];
 			var numeropass=this.hand.length;
 			while(cont<numeropass){
@@ -306,7 +316,6 @@ export class  game
 				cont+=1;
 			}
 			this.hand = LISTA;
-			console.log(LISTA);
 			this.updatecards(event,this);
 		}
 	}
@@ -334,10 +343,20 @@ export class  game
 	    var text = this.cardfield.nativeElement.children[cardtoremove].innerHTML.replace('<img src="../assets/imgs/',"");
 	    text = text.replace('.png" alt="">',"");
 	    var length = text.length;
-	    var numbercard = text[0];
-	    var colorcard = text.slice(1,length);
+	    var numberlist = ["0","1","2","3","4","5","6","7","8","9"];
+	    var special = numberlist.indexOf(text[1]);
+	    if (special < 0)
+	    {
+		    var numbercard = text[0];
+		    var colorcard = text.slice(1,length);
+	    }
+	    else
+	    {
+	    	var numbercard = text[0] + text[1];
+		    var colorcard = text.slice(2,length);
+	    }
 	    this.cardtoplay = { "number" : numbercard , "color": colorcard };
-		if (((this.cardtoplay.number == this.currentcard.number) || (this.cardtoplay.color == this.currentcard.color)) && this.boolplay == true)
+		if (((this.cardtoplay.number == this.currentcard.number) || (this.cardtoplay.color == this.currentcard.color)) && this.boolplay == true && this.forceend == 0)
 		{
 			this.selectfield.nativeElement.innerHTML = ""; //clears selectfield
 		    this.selectcards = []; // both of these lines also in the boolreturn == "False" code
@@ -355,9 +374,21 @@ export class  game
 				currentsum = currentsum + locationsum;
 				i = i + 1;
 		  	}
-		  	this.socket.send(JSON.stringify({"action" :"play","user":this.usuario,"card": this.cardtoplay,"key":this.roomkey,"roomsize":this.roomsize}));
-		  	this.boolplay = false;
-		  	this.currentplayernumber(this);
+		  	if (this.hand.length > 0)
+		  	{
+			  	this.socket.send(JSON.stringify({"end":0,"action" :"play","user":this.usuario,"card": this.cardtoplay,"key":this.roomkey,"roomsize":this.roomsize}));
+			  	this.boolplay = false;
+			  	this.currentplayernumber(this);
+			}
+			else
+			{
+				this.socket.send(JSON.stringify({"end":1,"action" :"play","user":this.usuario,"card": this.cardtoplay,"key":this.roomkey,"roomsize":this.roomsize}));
+				this.booldrawlock = true;
+				this.boolsortlock = true;
+				this.boolsortlock2 = true;
+				this.boolplay = false;
+				this.endgame(event);
+			}
 		}
 	}
 	playcard() //não tem código de socket, utilizado para atualizar a carta que está em jogo(não precisa alterações..?)
@@ -376,10 +407,11 @@ export class  game
 	}
 	passturn(event)
 	{
-		if (this.boolplay == true && this.booldrawlock == true)
+		if ((this.boolplay == true && this.booldrawlock == true) || this.forceend == 1)
 		{
 			this.boolplay = false;
 			this.booldrawlock = true;
+			this.forceend = 0;
 			var deck = JSON.parse(sessionStorage.getItem(this.usuario));
 			if (deck.length>0)
 			{
@@ -398,14 +430,11 @@ export class  game
 	}
 	displaytext() //função comentada lá em cima, util caso precise dar um log em cada segundo
 	{
-		console.log(this.currentcolor.nativeElement.firstChild.data);
-		console.log(this.ioncontent._elementRef.nativeElement.className);
-		console.log(this.ioncontent._elementRef.nativeElement.style.backgroundColor);
+		console.log("Hello");
 	}
 	currentplayernumber(that)
 	{
 		//código de num de cartas na mão do player
-		console.log(JSON.parse(sessionStorage.getItem((that.usuario + " " + "2"))));
 		var playernum = that.players.indexOf(that.usuario);
 		if (playernum == 0)
 		{
@@ -503,10 +532,10 @@ export class  game
 		}
 		else
 		{
-			if(that.boolplay == false)
+			if(that.boolplay == false && !((that.players[that.currentplayer] == that.usuario) && that.forceend == 1))
 			{
 				//mandar voto pro servidor dizendo que o turno do cara acabou
-				console.log("Editar aqui caso queira mais proteção..")
+				console.log("Código de votadores...")
 			}
 			else
 			{
@@ -529,201 +558,156 @@ export class  game
 	{
 				this.screenwidth = 0;
 				this.numcards = 0;
-				console.log(this.usuario)
-				console.log(this.ioncontent); 
 				//console.log('Width: ' + platform.width());
 			 	//console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://localhost:8342');
+			 	this.socket = new WebSocket('ws://aaa.aaa.a.a:8342');
 			 	const socketplace = this.socket;
-			 	console.log(socketplace);
 			 	function requirestart(event,that)
 				{
-				    socketplace.send(JSON.stringify({"action" :"start","user":that.usuario,"key":that.roomkey,"roomsize":that.roomsize}));
+				    socketplace.send(JSON.stringify({"action" :"start","user":that.usuario,"roomsize":that.roomsize}));
 				};
 				function getdata(event,that)
 				{
 					var action = JSON.parse(event.data);
-					console.log(action);
-					if (action.start == 0)
+					if (that.endlock == 0)
 					{
-						that.boolsortlock = true;
-						if (action.first == that.usuario)
+						if (action.start == 0)
 						{
-							that.isfirst = true;
-							//montar deck
-							var deck = [];
-							var colors = ["red","blue","green","yellow"];
-							var numbers = [0,1,2,3,4,5,6,7,8,9];
-							for (var i = 0; i < colors.length; i++) 
+							that.roomkey = action.key;
+							that.boolsortlock = true;
+							if (action.first == that.usuario)
 							{
-								for (var k = 0; k < numbers.length; k++)
+								that.isfirst = true;
+								//montar deck
+								var deck = [];
+								var colors = ["red","blue","green","yellow"];
+								var numbers = [0,1,2,3,4,5,6,7,8,9,10,11,12];
+								for (var i = 0; i < colors.length; i++) 
 								{
-									var colorr = colors[i];
-									var numberr = numbers[k];
-									deck.push({"number" : numberr, "color" : colorr});
-								}	
-							}
-							sessionStorage.setItem(that.usuario, JSON.stringify(deck));
-							//random.shuffle.deck
-						}
-						if (that.isfirst == true)
-						{
-							that.players.push(action.user)
-						}
-						if ((that.players.length == that.roomsize)&&(that.isfirst == true))
-						{
-							var datasend = JSON.parse(sessionStorage.getItem(that.usuario));
-							socketplace.send(JSON.stringify({"action" :"echostart","deck": datasend,"players":that.players,"user":that.usuario,"key":that.roomkey,"roomsize":that.roomsize}));
-						}
-					};
-					if (action.start == 1)
-					{
-						//código dos nomes dos players
-						that.players = action.players;
-						var playernum = that.players.indexOf(that.usuario);
-						if (playernum == 0)
-						{
-							var text1 = that.players[1].substring(0, 6);
-							that.name1.nativeElement.innerHTML = text1;
-							var text2 = that.players[2].substring(0, 6);
-							that.name2.nativeElement.innerHTML = text2;
-						}
-						else if (playernum == 1)
-						{
-							var text1 = that.players[0].substring(0, 6);
-							that.name2.nativeElement.innerHTML = text1;
-							var text2 = that.players[2].substring(0, 6);
-							that.name1.nativeElement.innerHTML = text2;
-						}
-						else
-						{
-							var text1 = that.players[0].substring(0, 6);
-							that.name1.nativeElement.innerHTML = text1;
-							var text2 = that.players[1].substring(0, 6);
-							that.name2.nativeElement.innerHTML = text2
-						}
-						//
-						if (that.isfirst == false)
-						{
-							sessionStorage.setItem(that.usuario, JSON.stringify(action.deck));
-						}
-						var deck2 = JSON.parse(sessionStorage.getItem(that.usuario));
-						that.cardtoplay = deck2.pop();
-						that.playcard();
-						that.currentplayer = 0;
-						var cont0 = 0;
-						if (playernum == 0)
-						{
-							var todraw = deck2.slice(-7);
-							deck2.splice(-7,7);
-							for (var i = 0;i<(7 * (that.players.length - 1));i++)
-							{
-								deck2.pop();
-							}
-							deck2 = deck2.concat(todraw);
-						}
-						else if (playernum == 1)
-						{
-							var todraw = deck2.slice(-14,-7);
-							deck2.splice(-14,7);
-							for (var i = 0;i<(7 * (that.players.length - 1));i++)
-							{
-								deck2.pop();
-							}
-							deck2 = deck2.concat(todraw);
-						}
-						else if (playernum == 2)
-						{
-							var todraw = deck2.slice(-21,-14);
-							deck2.splice(-21,7);
-							for (var i = 0;i<(7 * (that.players.length - 1));i++)
-							{
-								deck2.pop();
-							}
-							deck2 = deck2.concat(todraw);
-						}
-						else if (playernum == 3)
-						{
-							var todraw = deck2.slice(-28,-21);
-							deck2.splice(-28,7);
-							for (var i = 0;i<(7 * (that.players.length - 1));i++)
-							{
-								deck2.pop();
-							}
-							deck2 = deck2.concat(todraw);
-						}
-						sessionStorage.setItem(that.usuario, JSON.stringify(deck2));
-						that.drawcard(7,true);
-						var cont1 = 0;
-						var playercards = [];
-						while (cont1 < that.roomsize)
-						{
-							playercards.push(7);
-							cont1 = cont1 + 1
-						}
-						sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards));
-						if (that.players[0] == that.usuario)
-						{
-							that.boolplay = true;
-							that.booldrawlock = false;
-							that.boolsortlock = false;
-						}
-						that.currentplayernumber(that);
-						that.currentplayercolor(that);
-						that.startcountdown();
-						that.cartasbaralho.nativeElement.innerHTML = String(JSON.parse(sessionStorage.getItem(that.usuario)).length);
-					};
-					if (action.start == 2)
-					{
-						if (action.end == 0)
-						{
-							if (action.pass == 1)
-							{
-								that.currentplayer = that.currentplayer + 1 * (that.order);
-								while (that.currentplayer >= that.players.length)
-								{
-									that.currentplayer = that.currentplayer - that.roomsize;
+									for (var k = 0; k < numbers.length; k++)
+									{
+										var colorr = colors[i];
+										var numberr = numbers[k];
+										deck.push({"number" : numberr, "color" : colorr});
+									}	
 								}
-								while (that.currentplayer < 0)
-								{
-									that.currentplayer = that.currentplayer + that.roomsize;
-								}
-								if (that.players[that.currentplayer] == that.usuario)
-								{
-									that.boolplay = true;
-									that.booldrawlock = false;
-								}
-								that.currentplayernumber(that);
-								that.currentplayercolor(that);
-								that.startcountdown();
+							    for (let h = deck.length - 1; h > 0; h--) 
+							    {
+							        const j = Math.floor(Math.random() * (h + 1));
+							        [deck[h], deck[j]] = [deck[j], deck[h]];
+							    }
+								sessionStorage.setItem(that.usuario, JSON.stringify(deck));
 							}
-							if (action.draw > 0)
+							if (that.isfirst == true)
 							{
-								var cont1 = 0;
-								var deck3 = JSON.parse(sessionStorage.getItem(that.usuario));
-								var usuariotemp = that.usuario;
-								while ((cont1 < action.draw)&&(action.player != that.usuario))
-								{
-									deck3.pop(); //tira a carta de cima... ultima carta?
-									cont1 = cont1 + 1
-								}
-								sessionStorage.setItem(usuariotemp, JSON.stringify(deck3));
-								var playercards2 = JSON.parse(sessionStorage.getItem((that.usuario + " " + "2")));
-								playercards2[that.currentplayer] = playercards2[that.currentplayer] + action.draw;
-								sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards2));
+								that.players.push(action.user)
 							}
-							if (action.play == 1)
+							if ((that.players.length == that.roomsize)&&(that.isfirst == true))
 							{
-								that.cardtoplay = action.card;
-								that.playcard();
-								var playercards3 = JSON.parse(sessionStorage.getItem((that.usuario + " " + "2")));
-								playercards3[that.currentplayer] = playercards3[that.currentplayer] - 1;
-								sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards3));
-								if ((action.card.color == "black") || (action.card.number > 9))
+								var datasend = JSON.parse(sessionStorage.getItem(that.usuario));
+								socketplace.send(JSON.stringify({"action" :"echostart","deck": datasend,"players":that.players,"user":that.usuario,"key":that.roomkey,"roomsize":that.roomsize}));
+							}
+						};
+						if (action.start == 1)
+						{
+							//código dos nomes dos players
+							that.players = action.players;
+							var playernum = that.players.indexOf(that.usuario);
+							if (playernum == 0)
+							{
+								var text1 = that.players[1].substring(0, 6);
+								that.name1.nativeElement.innerHTML = text1;
+								var text2 = that.players[2].substring(0, 6);
+								that.name2.nativeElement.innerHTML = text2;
+							}
+							else if (playernum == 1)
+							{
+								var text1 = that.players[0].substring(0, 6);
+								that.name2.nativeElement.innerHTML = text1;
+								var text2 = that.players[2].substring(0, 6);
+								that.name1.nativeElement.innerHTML = text2;
+							}
+							else
+							{
+								var text1 = that.players[0].substring(0, 6);
+								that.name1.nativeElement.innerHTML = text1;
+								var text2 = that.players[1].substring(0, 6);
+								that.name2.nativeElement.innerHTML = text2
+							}
+							//
+							if (that.isfirst == false)
+							{
+								sessionStorage.setItem(that.usuario, JSON.stringify(action.deck));
+							}
+							var deck2 = JSON.parse(sessionStorage.getItem(that.usuario));
+							that.cardtoplay = deck2.pop();
+							that.playcard();
+							that.currentplayer = 0;
+							var cont0 = 0;
+							if (playernum == 0)
+							{
+								var todraw = deck2.slice(-7);
+								deck2.splice(-7,7);
+								for (var i = 0;i<(7 * (that.players.length - 1));i++)
 								{
-									console.log("código de cartas especiais");
+									deck2.pop();
 								}
-								else
+								deck2 = deck2.concat(todraw);
+							}
+							else if (playernum == 1)
+							{
+								var todraw = deck2.slice(-14,-7);
+								deck2.splice(-14,7);
+								for (var i = 0;i<(7 * (that.players.length - 1));i++)
+								{
+									deck2.pop();
+								}
+								deck2 = deck2.concat(todraw);
+							}
+							else if (playernum == 2)
+							{
+								var todraw = deck2.slice(-21,-14);
+								deck2.splice(-21,7);
+								for (var i = 0;i<(7 * (that.players.length - 1));i++)
+								{
+									deck2.pop();
+								}
+								deck2 = deck2.concat(todraw);
+							}
+							else if (playernum == 3)
+							{
+								var todraw = deck2.slice(-28,-21);
+								deck2.splice(-28,7);
+								for (var i = 0;i<(7 * (that.players.length - 1));i++)
+								{
+									deck2.pop();
+								}
+								deck2 = deck2.concat(todraw);
+							}
+							sessionStorage.setItem(that.usuario, JSON.stringify(deck2));
+							that.drawcard(7,true);
+							var cont1 = 0;
+							var playercards = [];
+							while (cont1 < that.roomsize)
+							{
+								playercards.push(7);
+								cont1 = cont1 + 1
+							}
+							sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards));
+							if (that.players[0] == that.usuario)
+							{
+								that.boolplay = true;
+								that.booldrawlock = false;
+								that.boolsortlock = false;
+							}
+							that.startcountdown();
+							that.cartasbaralho.nativeElement.innerHTML = String(JSON.parse(sessionStorage.getItem(that.usuario)).length);
+						};
+						if (action.start == 2)
+						{
+							if (action.end == 0)
+							{
+								if (action.pass == 1)
 								{
 									that.currentplayer = that.currentplayer + 1 * (that.order);
 									while (that.currentplayer >= that.players.length)
@@ -739,22 +723,118 @@ export class  game
 										that.boolplay = true;
 										that.booldrawlock = false;
 									}
-									that.currentplayernumber(that);
-									that.currentplayercolor(that);
+									that.startcountdown();
+								}
+								if (action.draw > 0)
+								{
+									var cont1 = 0;
+									var deck3 = JSON.parse(sessionStorage.getItem(that.usuario));
+									var usuariotemp = that.usuario;
+									while ((cont1 < action.draw)&&(action.player != that.usuario))
+									{
+										deck3.pop(); //tira a carta de cima... ultima carta?
+										cont1 = cont1 + 1
+									}
+									sessionStorage.setItem(usuariotemp, JSON.stringify(deck3));
+									var playercards2 = JSON.parse(sessionStorage.getItem((that.usuario + " " + "2")));
+									playercards2[that.currentplayer] = playercards2[that.currentplayer] + action.draw;
+									sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards2));
+								}
+								if (action.play == 1)
+								{
+									that.cardtoplay = action.card;
+									that.playcard();
+									var playercards3 = JSON.parse(sessionStorage.getItem((that.usuario + " " + "2")));
+									playercards3[that.currentplayer] = playercards3[that.currentplayer] - 1;
+									sessionStorage.setItem((that.usuario + " " + "2"), JSON.stringify(playercards3));
+									if ((action.card.color == "black") || (action.card.number > 9))
+									{
+										if (action.card.number != 12)
+										{
+											that.currentplayer = that.currentplayer + 1 * (that.order);
+											while (that.currentplayer >= that.players.length)
+											{
+												that.currentplayer = that.currentplayer - that.roomsize;
+											}
+											while (that.currentplayer < 0)
+											{
+												that.currentplayer = that.currentplayer + that.roomsize;
+											}
+											if (action.card.number == 10 && (that.players[that.currentplayer] == that.usuario))//+2
+											{
+												that.forceend = 1;
+												that.boolplay = false; //pode dar erro
+												that.booldrawlock = true; //pode dar erro
+												that.drawcard(2,false);
+											}
+											else if (action.card.number == 11 && (that.players[that.currentplayer] == that.usuario))//block
+											{
+												that.forceend = 1;
+												that.boolplay = false; //pode dar erro
+												that.booldrawlock = true; //pode dar erro
+												//auto pass turn, make a bool variable for skip?
+											}
+										}
+										else//invert
+										{
+											that.order = that.order * (-1);
+											that.sentidoimg.nativeElement.style['-moz-transform'] = "scaleX(" + String(that.order) + ")";
+											that.sentidoimg.nativeElement.style['-o-transform'] = "scaleX(" + String(that.order) + ")";
+											that.sentidoimg.nativeElement.style['-webkit-transform'] = "scaleX(" + String(that.order) + ")";
+											that.sentidoimg.nativeElement.style['transform'] = "scaleX(" + String(that.order) + ")";
+											that.currentplayer = that.currentplayer + 1 * (that.order);
+											while (that.currentplayer >= that.players.length)
+											{
+												that.currentplayer = that.currentplayer - that.roomsize;
+											}
+											while (that.currentplayer < 0)
+											{
+												that.currentplayer = that.currentplayer + that.roomsize;
+											}
+										}
+									}
+									else
+									{
+										that.currentplayer = that.currentplayer + 1 * (that.order);
+										while (that.currentplayer >= that.players.length)
+										{
+											that.currentplayer = that.currentplayer - that.roomsize;
+										}
+										while (that.currentplayer < 0)
+										{
+											that.currentplayer = that.currentplayer + that.roomsize;
+										}
+									}
+									if ((that.players[that.currentplayer] == that.usuario)&& that.forceend == 0)
+									{
+										that.boolplay = true;
+										that.booldrawlock = false;
+									}
+									else
+									{
+										that.boolplay = false; //pode dar erro
+										that.booldrawlock = true; //pode dar erro
+									}
 									that.startcountdown();
 								}
 							}
-						}
-						else
+							else
+							{
+								that.booldrawlock = true;
+								that.boolsortlock = true;
+								that.boolsortlock2 = true;
+								that.boolplay = false;
+								that.endgame(event);
+							}
+							that.cartasbaralho.nativeElement.innerHTML = String(JSON.parse(sessionStorage.getItem(that.usuario)).length);
+						};
+						if (action.start != 0)
 						{
-							that.booldrawlock = true;
-							that.boolsortlock = true;
-							that.boolsortlock2 = true;
-							that.boolplay = false;
-							that.endgame(event);
+							that.currentplayernumber(that);
+							that.currentplayercolor(that);
 						}
-						that.cartasbaralho.nativeElement.innerHTML = String(JSON.parse(sessionStorage.getItem(that.usuario)).length);
 					};
+					
 				};
 				this.socket.addEventListener('open', (event: Event) => {requirestart(event,this)});
 				this.socket.addEventListener('message', (event: Event) => {getdata(event,this)});

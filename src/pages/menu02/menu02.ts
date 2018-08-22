@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { game } from '../game/game';
-import { ConfigPage } from '../Config/Config';
+import { ConfigPage } from '../config/config';
 
 @IonicPage()
 @Component({

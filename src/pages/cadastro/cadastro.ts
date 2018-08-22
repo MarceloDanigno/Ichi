@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
-import { Menu02Page } from '../Menu02/Menu02';
+import { Menu02Page } from '../menu02/menu02';
 import * as $ from 'jquery';
 
 @Component({

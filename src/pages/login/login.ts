@@ -30,7 +30,6 @@ export class LoginPage {
    
   login() {
     let { nome, senha } = this.loginForm.controls;
-
     if (!this.loginForm.valid) {
       if (!nome.valid) {
         this.errorNome = true;
@@ -55,15 +54,14 @@ export class LoginPage {
       $.ajax({
         type: "POST",
         headers: {
-          "Access-Control-Allow-Origin": "http://127.0.0.1:5000",
+          "Access-Control-Allow-Origin": "http://10.10.15.15:5000",
           "Access-Control-Allow-Headers": "*"
         },
         dataType: "json",
-        url: 'http://127.0.0.1:5000/Login/',
+        url: 'http://10.10.15.15:5000/Login/',
         data: JSON.stringify(user),
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {
-          console.log(result);
           sessionStorage.setItem('resultadoLogin', result.stats);
           if (result.stats) {
             sessionStorage.setItem('vitorias', result.user.wins);
@@ -73,8 +71,6 @@ export class LoginPage {
         }
       });
      loginOK = sessionStorage.getItem('resultadoLogin');
-      console.log("Tem que aparecer depois do stats.");
-      console.log(loginOK);
       }
       if (eval(loginOK)) {
         this.errorNome = false;

@@ -30,7 +30,6 @@ export class LoginPage {
    
   login() {
     let { nome, senha } = this.loginForm.controls;
-
     if (!this.loginForm.valid) {
       if (!nome.valid) {
         this.errorNome = true;
@@ -63,7 +62,6 @@ export class LoginPage {
         data: JSON.stringify(user),
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {
-          console.log(result);
           sessionStorage.setItem('resultadoLogin', result.stats);
           if (result.stats) {
             sessionStorage.setItem('vitorias', result.user.wins);
@@ -73,8 +71,6 @@ export class LoginPage {
         }
       });
      loginOK = sessionStorage.getItem('resultadoLogin');
-      console.log("Tem que aparecer depois do stats.");
-      console.log(loginOK);
       }
       if (eval(loginOK)) {
         this.errorNome = false;

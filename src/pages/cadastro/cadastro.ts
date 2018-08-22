@@ -141,7 +141,7 @@ export class CadastroPage{
       data: JSON.stringify(user),
       contentType: 'application/json;charset=UTF-8',
       success: function(result) {
-         alert("Cadastro realizado com sucesso!   ");
+         alert("Cadastro realizado com sucesso!");
       }
   });
   } 

@@ -21,9 +21,40 @@ page-menu02 {
             height: 20%;
             position: relative;
         }
+        .menu02_nick{
+            z-index: 2;
+            position:absolute;
+            font-size: 250%;
+            bottom: 24.5%;
+            left: 32%;
+            color: snow;
+            -webkit-text-stroke-width: 1.2px;
+            -webkit-text-stroke-color:black;
+        }
+        .menu02_wins{
+            z-index: 2;
+            position:absolute;
+            font-size: 200%;
+            bottom: -12%;
+            left: 27%;
+            color: snow;
+            -webkit-text-stroke-width: 1.2px;
+            -webkit-text-stroke-color:black;
+        }
+        .menu02_losses{
+            z-index: 2;
+            position:absolute;
+            font-size: 200%;
+            bottom: -12%;
+            left: 60%;
+            color: snow;
+            -webkit-text-stroke-width: 1.2px;
+            -webkit-text-stroke-color:black;
+        }
         .menu02_modo1{
-            left: 10%;
-            width: 37.5%;
+            left: 25%;
+            top: 50%;
+            width: 50.5%;
             height: auto;
             position: absolute;
         }

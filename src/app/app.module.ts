@@ -9,9 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { Menu02Page} from '../pages/Menu02/Menu02';
-import { SalaPage} from '../pages/Sala/Sala';
 import { ConfigPage } from '../pages/Config/Config';
-import { RegistPage } from '../pages/Regist/Regist';
 import { HTTP } from '@ionic-native/http';
 
 
@@ -23,9 +21,7 @@ import { HTTP } from '@ionic-native/http';
     LoginPage,
     CadastroPage,
     Menu02Page,
-    SalaPage,
-    ConfigPage,
-    RegistPage
+    ConfigPage
   ],
   imports: [
     BrowserModule,
@@ -39,9 +35,7 @@ import { HTTP } from '@ionic-native/http';
     LoginPage,
     CadastroPage,
     Menu02Page,
-    SalaPage,
-    ConfigPage,
-    RegistPage
+    ConfigPage
   ],
   providers: [
     StatusBar,

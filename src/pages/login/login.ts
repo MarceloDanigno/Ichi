@@ -2,7 +2,12 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Menu02Page} from '../Menu02/Menu02';
 import { FormBuilder, Validators} from '@angular/forms';
+import {Md5} from 'ts-md5/dist/md5';
+import * as $ from 'jquery';
 
+let id: string;
+
+sessionStorage.setItem("id", id);
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -22,6 +27,10 @@ export class LoginPage {
       senha: ['', Validators.required]
     })
   }
+  public Senha: string;  //declarando variáveis para pegar os dados do usuário
+  public Nome: string;
+  public Confirma: boolean;
+  
   login(){
     let{nome, senha} = this.loginForm.controls;
     
@@ -42,10 +51,24 @@ export class LoginPage {
       }
     }
     else{
+      var user = {column: (this.Nome), password: Md5.hashStr(this.Senha), socket_id: "socket"};
+      $.ajax({
+        type : "POST",
+        headers: {"Access-Control-Allow-Origin": "http://127.0.0.1:5000",
+        "Access-Control-Allow-Headers": "*"},
+        dataType: "json",
+        url : 'http://127.0.0.1:5000/Login/',
+        data: JSON.stringify(user),
+        contentType: 'application/json;charset=UTF-8',
+        success: function(result) {
+            $('#Login').children('#result').hide().html(JSON.stringify(result)).show();
+          }
+    });
+      this.navCtrl.push(Menu02Page);
       this.messageSenha = "";
       this.messageNome = "";
-      alert("Login efetuado com sucesso!")
-      this.navCtrl.push(Menu02Page);
+      sessionStorage.setItem('user', user.column);
+      sessionStorage.setItem('password', (this.Senha));
     }
   }
 }

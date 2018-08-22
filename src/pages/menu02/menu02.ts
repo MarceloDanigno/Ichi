@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { game } from '../game/game';
 import { SalaPage } from '../Sala/Sala';
 import { ConfigPage } from '../Config/Config';
+import { RegistPage } from '../Regist/Regist';
 
 @IonicPage()
 @Component({
@@ -25,5 +26,8 @@ export class Menu02Page {
   }
   config(){
     this.navCtrl.push( ConfigPage );
+  }
+  regist(){
+    this.navCtrl.push( RegistPage );
   }
 }

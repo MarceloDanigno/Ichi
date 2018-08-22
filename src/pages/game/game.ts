@@ -162,7 +162,7 @@ export class  game
 				that.hand.push(cartaadd);
 				var htmlstring = ((cartaadd.number).toString(10)) + cartaadd.color;
 				sessionStorage.setItem(that.usuario, JSON.stringify(deck));
-				var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+				var string = '<ion-img class="game_card img-loaded" src="..assets/imgs/'+ htmlstring +'.png ng-reflect-src="..assets/imgs/'+ htmlstring +'.png"><img src="..assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
 				that.cardfield.nativeElement.insertAdjacentHTML('beforeend', string);
 				//creates an html element in the end of children list
 				that.cardfield.nativeElement.children[that.numcards - 1].addEventListener("click",(event: Event) =>{that.selectshow(event);});
@@ -228,7 +228,7 @@ export class  game
 			{
 				cartaadd = that.hand[h];
 				var htmlstring = ((cartaadd.number).toString(10)) + cartaadd.color;
-				var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+				var string = '<ion-img class="game_card img-loaded" src="..assets/imgs/'+ htmlstring +'.png ng-reflect-src="..assets/imgs/'+ htmlstring +'.png"><img src="..assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
 				that.cardfield.nativeElement.insertAdjacentHTML('beforeend', string);
 				that.cardfield.nativeElement.children[h].addEventListener("click",(event: Event) =>{that.selectshow(event);});
 				that.cardfield.nativeElement.children[h].style.left = ((currentsum - 50).toString(10)) + "px";
@@ -340,7 +340,7 @@ export class  game
 			currentsum = currentsum + locationsum;
 			i= i+1;
 		}
-	    var text = this.cardfield.nativeElement.children[cardtoremove].innerHTML.replace('<img src="../assets/imgs/',"");
+	    var text = this.cardfield.nativeElement.children[cardtoremove].innerHTML.replace('<img src="..assets/imgs/',"");
 	    text = text.replace('.png" alt="">',"");
 	    var length = text.length;
 	    var numberlist = ["0","1","2","3","4","5","6","7","8","9"];
@@ -396,7 +396,7 @@ export class  game
 		this.currentfield.nativeElement.innerHTML = ""; 
 		this.currentcard = this.cardtoplay;
 		var htmlstring = ((this.cardtoplay.number).toString(10)) + this.cardtoplay.color;
-		var string = '<ion-img class="game_card img-loaded" src="../assets/imgs/'+ htmlstring +'.png ng-reflect-src="../assets/imgs/'+ htmlstring +'.png"><img src="../assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
+		var string = '<ion-img class="game_card img-loaded" src="..assets/imgs/'+ htmlstring +'.png ng-reflect-src="..assets/imgs/'+ htmlstring +'.png"><img src="..assets/imgs/'+ htmlstring +'.png" alt=""></ion-img>';
 		this.currentfield.nativeElement.insertAdjacentHTML('beforeend', string);
 		this.screenwidth = (this.currentfield.nativeElement.offsetWidth);
 		var locationsum = ((this.screenwidth - 100)/(2));
@@ -560,7 +560,7 @@ export class  game
 				this.numcards = 0;
 				//console.log('Width: ' + platform.width());
 			 	//console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://aaa.aaa.a.a:8342');
+			 	this.socket = new WebSocket('ws://10.10.17.182:8342');
 			 	const socketplace = this.socket;
 			 	function requirestart(event,that)
 				{

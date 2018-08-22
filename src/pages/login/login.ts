@@ -58,7 +58,7 @@ export class LoginPage {
           "Access-Control-Allow-Headers": "*"
         },
         dataType: "json",
-        url: 'http://127.0.0.1:5000/Login/',
+        url: 'http://10.10.15.15:5000/Login/',
         data: JSON.stringify(user),
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {

@@ -8,8 +8,8 @@ import { game } from '../pages/game/game';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
-import { Menu02Page} from '../pages/Menu02/Menu02';
-import { ConfigPage } from '../pages/Config/Config';
+import { Menu02Page} from '../pages/menu02/menu02';
+import { ConfigPage } from '../pages/config/config';
 import { HTTP } from '@ionic-native/http';
 
 

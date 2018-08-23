@@ -27,7 +27,7 @@ export class ConfigPage {
     $.ajax({ //Função de logout
           type : "POST",
           dataType: "json",
-          url : 'http://10.10.15.15:5000/Logout/',
+          url : 'http://127.0.0.1:5000/Logout/',
           data: JSON.stringify(data),
           contentType: 'application/json;charset=UTF-8',
           success: function(result){

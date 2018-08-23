@@ -12,10 +12,7 @@ import * as $ from 'jquery';
 export class HomePage {
 
   constructor(public navCtrl: NavController, platform: Platform) {
-  platform.ready().then((readySource)=>{
-  
-  //var socket = io.connect('http://127.0.0.1:5000');
-  //console.log(socket.id); 
+  platform.ready().then((readySource)=>{ 
   }
 )
   }

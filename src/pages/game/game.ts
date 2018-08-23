@@ -560,7 +560,7 @@ export class  game
 				this.numcards = 0;
 				//console.log('Width: ' + platform.width());
 			 	//console.log('Height: ' + platform.height());
-			 	this.socket = new WebSocket('ws://10.10.17.182:8342');
+			 	this.socket = new WebSocket('ws://192.168.43.23:8342');
 			 	const socketplace = this.socket;
 			 	function requirestart(event,that)
 				{

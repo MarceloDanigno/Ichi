@@ -54,19 +54,23 @@ export class LoginPage {
       $.ajax({
         type: "POST",
         headers: {
-          "Access-Control-Allow-Origin": "http://10.10.15.15:5000",
+          "Access-Control-Allow-Origin": "http:// 127.0.0.1:5000",
           "Access-Control-Allow-Headers": "*"
         },
         dataType: "json",
-        url: 'http://10.10.15.15:5000/Login/',
+        url: 'http://127.0.0.1:5000/Login/',
         data: JSON.stringify(user),
         contentType: 'application/json;charset=UTF-8',
+        async: false,
         success: function (result) {
           sessionStorage.setItem('resultadoLogin', result.stats);
           if (result.stats) {
             sessionStorage.setItem('vitorias', result.user.wins);
             sessionStorage.setItem('derrotas', result.user.losses);
             sessionStorage.setItem('id', result.user.id);
+          }
+          else{
+            sessionStorage.setItem('erroLogin', result.error);
           }
         }
       });
@@ -79,8 +83,14 @@ export class LoginPage {
         sessionStorage.setItem('password', (this.Senha));
       }
       else {
+        var errorLogin = sessionStorage.getItem('erroLogin');
         this.errorNome = true;
-        this.messageNome = "Usuário não cadastrado ou usuário e senha não coincidem";
-    }
+        if(errorLogin == "account in use"){
+          this.messageNome = "A conta está em uso.";  
+        }
+        else{
+          this.messageNome = "Usuário não cadastrado ou usuário e senha não coincidem";
+        }
+      }
   } 
 }

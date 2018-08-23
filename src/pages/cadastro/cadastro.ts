@@ -89,9 +89,10 @@ export class CadastroPage{
     $.ajax({ //função para checar o e-mail
       type : "POST",
       dataType: "json",
-      url : 'http://10.10.15.15:5000/Users/CheckEmail/',
+      url : 'http://127.0.0.1:5000/Users/CheckEmail/',
       data: JSON.stringify(Email),
       contentType: 'application/json;charset=UTF-8',
+      async: false,
       success: function(result) {
         sessionStorage.setItem('resultadoEmail', result.available);
         /* result{
@@ -114,9 +115,10 @@ export class CadastroPage{
     $.ajax({
       type : "POST",
       dataType: "json",
-      url : 'http://10.10.15.15:5000/Users/CheckNickname/',
+      url : 'http://127.0.0.1:5000/Users/CheckNickname/',
       data: JSON.stringify(NICKNAME),
       contentType: 'application/json;charset=UTF-8',
+      async: false,
       success: function(result) {
           sessionStorage.setItem('resultadoNick', result.available);
         }
@@ -137,9 +139,10 @@ export class CadastroPage{
     $.ajax({ //função para cadastrar o usuário
       type : "POST",
       dataType: "json", 
-      url : "http://10.10.15.15:5000/Register/",
+      url : "http://127.0.0.1:5000/Register/",
       data: JSON.stringify(user),
       contentType: 'application/json;charset=UTF-8',
+      async: false,
       success: function(result) {
          alert("Cadastro realizado com sucesso!");
       }

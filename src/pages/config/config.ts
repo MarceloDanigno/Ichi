@@ -31,7 +31,6 @@ export class ConfigPage {
           data: JSON.stringify(data),
           contentType: 'application/json;charset=UTF-8',
           success: function(result){
-              console.log(result);
             }
       });
   }

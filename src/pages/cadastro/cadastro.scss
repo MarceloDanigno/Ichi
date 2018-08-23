@@ -1,5 +1,5 @@
 page-cadastro{
-    .background{
+    .cadastro_background{
         width: 100%;
         height: 100%;
         background: linear-gradient(10deg,#696969,#000000   );
@@ -10,9 +10,13 @@ page-cadastro{
     .item{
         background: rgba(235,235,235,0px);
     }
-    .error{
+    .cadastro_error{
         color: #ff0000;
         font-size: 12px;
+    }
+    .cadastro_ok{
+        color : green;
+        font-size: 14px
     }
     ion-card.card{
         background: rgba(235,235,235,0.6px);

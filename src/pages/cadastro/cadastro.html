@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class = "background" padding>
+<ion-content class = "cadastro_background" padding>
   <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script" rel="stylesheet">
   <h1>Ichi!</h1>
   <!--<span>{{this.Senha + "|"+ this.Senha2}}</span>!-->
@@ -15,7 +15,7 @@
       <ion-card-content>
         <form padding [formGroup] = "cadastroForm" (submit) = "cadastro()" novalidate>
           <ion-list no-lines>
-            
+            <h6 *ngIf = "CadastroOK" class = "cadastro_ok"> {{messageCadastro}} </h6>
             <ion-item>
               <ion-label color = "dark" floating>E-mail</ion-label>
               <ion-input type = "text"
@@ -23,7 +23,7 @@
                         formControlName = "email"
               ></ion-input>
             </ion-item>
-            <h6 *ngIf = "errorEmail" class = "error"> {{messageEmail}} </h6>
+            <h6 *ngIf = "errorEmail" class = "cadastro_error"> {{messageEmail}} </h6>
            
             <ion-item>
               <ion-label color = "dark"  floating>Nome de usúario</ion-label>
@@ -33,7 +33,7 @@
 
               ></ion-input>
             </ion-item>
-            <h6 *ngIf = "errorNome" class = "error"> {{messageNome}} </h6>
+            <h6 *ngIf = "errorNome" class = "cadastro_error"> {{messageNome}} </h6>
             
             <ion-item>
               <ion-label color = "dark" floating>Senha</ion-label>
@@ -43,7 +43,7 @@
                 type = "password" >
               </ion-input>
             </ion-item>
-            <h6 *ngIf = "errorSenha" class = "error"> {{messageSenha}} </h6>
+            <h6 *ngIf = "errorSenha" class = "cadastro_error"> {{messageSenha}} </h6>
             
             <ion-item>
               <ion-label color = "dark" floating>Confirme a Senha</ion-label>
@@ -53,8 +53,8 @@
                 formControlName = "senha2"
               ></ion-input>
             </ion-item>
-            <h6 *ngIf = "errorSenha2" class = "error"> {{messageSenha2}} </h6>
-            <h6 *ngIf = "Confirma" class = "error"> Senhas diferentes </h6>
+            <h6 *ngIf = "errorSenha2" class = "cadastro_error"> {{messageSenha2}} </h6>
+            <h6 *ngIf = "Confirma" class = "cadastro_error"> Senhas diferentes </h6>
             <button ion-button color = "dark" block>Cadastrar</button>
           </ion-list> 
       </form>

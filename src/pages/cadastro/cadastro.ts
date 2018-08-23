@@ -4,7 +4,7 @@ import { FormBuilder, Validators} from '@angular/forms';
 import {Md5} from 'ts-md5/dist/md5';
 import { Menu02Page } from '../menu02/menu02';
 import * as $ from 'jquery';
-
+//@HostListener('window:beforeunload', ['$event'])
 @Component({
   selector: 'page-cadastro',
   templateUrl: 'cadastro.html'
@@ -19,10 +19,12 @@ export class CadastroPage{
   errorSenha = false;
   errorSenha2= false;
   errorEmail = false;     //declarando variáveis para verificação e autenticação
+  CadastroOK = false;
   messageEmail = "";
   messageNome = "";
   messageSenha = "";
   messageSenha2 = "";
+  messageCadastro = "";
   constructor(public navCtrl: NavController,formBuilder: FormBuilder){
     this.cadastroForm = formBuilder.group({
       nome: ['', Validators.compose([Validators.minLength(4), Validators.maxLength(16),
@@ -41,9 +43,13 @@ export class CadastroPage{
   public Email: string;  //declarando variáveis para pegar os dados do usuário
   public Nome: string;
   public Confirma: boolean;
+  /*beforeunloadHandler(event) {
+    this.endChat();
+  }*/
   cadastro(){
     let{nome, senha, senha2, email} = this.cadastroForm.controls;
    if(!this.cadastroForm.valid || this.Senha2 != this.Senha){
+    this.CadastroOK = false;
     if(!nome.valid){ //Validação do tamanho do nickname
        this.errorNome = true;
        this.messageNome = "Deve ter de 4-16 caracteres";
@@ -127,16 +133,20 @@ export class CadastroPage{
     if(resultadoNick == '0'){
       this.errorNome = true;
       this.messageNome = "Nickname já está sendo utilizado!";
+      this.messageCadastro = "";
     }
     else{
       this.errorNome = false;
       this.messageNome = "";
+      this.messageCadastro = "";
     }
     //-----------------------CADASTRO DE USUÁRIO-------------------------------------------------
     
     if(resultadoEmail == resultadoNick && resultadoEmail == '1'){
       var user = {nickname: (this.Nome), email: (this.Email), password: Md5.hashStr(this.Senha), socket_id: "socket"}; 
-    $.ajax({ //função para cadastrar o usuário
+      this.CadastroOK = true;
+      this.messageCadastro = "Cadastro realizado com sucesso!"
+      $.ajax({ //função para cadastrar o usuário
       type : "POST",
       dataType: "json", 
       url : "http://127.0.0.1:5000/Register/",
@@ -144,7 +154,6 @@ export class CadastroPage{
       contentType: 'application/json;charset=UTF-8',
       async: false,
       success: function(result) {
-         alert("Cadastro realizado com sucesso!");
       }
   });
   } 

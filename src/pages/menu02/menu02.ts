@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { game } from '../game/game';
 import { ConfigPage } from '../config/config';
+import { ComoPage } from '../como/como';
+import { CreditosPage} from '../creditos/creditos';
 
 @IonicPage()
 @Component({
@@ -28,5 +30,11 @@ export class Menu02Page {
   }
   config(){
     this.navCtrl.push( ConfigPage );
+  }
+  comojogar(){
+    this.navCtrl.push( ComoPage );
+  }
+  creditos(){
+    this.navCtrl.push( CreditosPage );
   }
 }

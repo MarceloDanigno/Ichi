@@ -195,9 +195,15 @@
 	padding-right: 0px;
 	padding-left: 0px; 
 	margin: 0px 0px 0px 0px;
-	height: 18.3333%;
-	width: 100%;
+	//height: auto;
+	//width: 100%;
 	top: 2.5%;
+	max-height: auto;
+	max-width: 100%;
+	min-height: auto;
+	min-width: 100%;
+	background-size: 100%;
+	background-color: transparent;
 	/*max-width: 100%;*/
 	z-index: -1;
 	/*pointer-events: none;*/

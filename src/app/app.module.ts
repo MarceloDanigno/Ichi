@@ -10,6 +10,8 @@ import { LoginPage } from '../pages/login/login';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { Menu02Page} from '../pages/menu02/menu02';
 import { ConfigPage } from '../pages/config/config';
+import {ComoPage} from '../pages/como/como';
+import {CreditosPage} from '../pages/creditos/creditos';
 import { HTTP } from '@ionic-native/http';
 
 
@@ -21,7 +23,9 @@ import { HTTP } from '@ionic-native/http';
     LoginPage,
     CadastroPage,
     Menu02Page,
-    ConfigPage
+    ConfigPage,
+    ComoPage,
+    CreditosPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { HTTP } from '@ionic-native/http';
     LoginPage,
     CadastroPage,
     Menu02Page,
-    ConfigPage
+    ConfigPage,
+    ComoPage,
+    CreditosPage
   ],
   providers: [
     StatusBar,

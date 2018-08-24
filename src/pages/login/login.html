@@ -4,7 +4,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class = "background" padding scrollbar-y-auto>
+<ion-content class = "login_background" padding scrollbar-y-auto>
   <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script" rel="stylesheet">
   <h1>Ichi!</h1>
   <ion-card>
@@ -22,7 +22,7 @@
                 formControlName = "nome"
               ></ion-input>
             </ion-item>
-            <h6 *ngIf = "errorNome" class = "error"> {{messageNome}} </h6>
+            <h6 *ngIf = "errorNome" class = "login_error"> {{messageNome}} </h6>
             
             <ion-item>
               <ion-label color = "dark" floating>Senha</ion-label>
@@ -31,9 +31,9 @@
                   formControlName = "senha"
               ></ion-input>
             </ion-item>
-            <h6 *ngIf = "errorSenha" class = "error"> {{messageSenha}} </h6>
+            <h6 *ngIf = "errorSenha" class = "login_error"> {{messageSenha}} </h6>
             <ion-item>
-              <p class = "oi">Esqueceu sua senha?<a>Clique aqui</a></p>
+              <p class = "login_oi">Esqueceu sua senha?<a>Clique aqui</a></p>
             </ion-item>
             
             <button ion-button color = "dark" block>Entrar</button>

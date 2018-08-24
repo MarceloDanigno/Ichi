@@ -1,6 +1,6 @@
 page-menu02 {
     ion-content{    
-        background-image: url("/assets/imgs/fundo_menu.jpg");
+        background-image: url("/assets/imgs/fundo_menu02.jpg");
         background-size: 100% 100%;
         .menu02_info{
             width: 80%;
@@ -25,7 +25,7 @@ page-menu02 {
             z-index: 2;
             position:absolute;
             font-size: 250%;
-            bottom: 24.5%;
+            bottom: 19%;
             left: 32%;
             color: snow;
             -webkit-text-stroke-width: 1.2px;
@@ -36,7 +36,7 @@ page-menu02 {
             position:absolute;
             font-size: 200%;
             bottom: -12%;
-            left: 27%;
+            left: 24%;
             color: snow;
             -webkit-text-stroke-width: 1.2px;
             -webkit-text-stroke-color:black;
@@ -46,15 +46,29 @@ page-menu02 {
             position:absolute;
             font-size: 200%;
             bottom: -12%;
-            left: 60%;
+            left: 55.5%;
             color: snow;
             -webkit-text-stroke-width: 1.2px;
             -webkit-text-stroke-color:black;
         }
-        .menu02_modo1{
-            left: 25%;
-            top: 50%;
-            width: 50.5%;
+        .menu02_jogar{
+            left: 15%;
+            top: -10%;
+            width: 70.5%;
+            height: auto;
+            position: absolute;
+        }
+        .menu02_comojogar{
+            left: 15%;
+            top: 110%;
+            width: 70.5%;
+            height: auto;
+            position: absolute;
+        }
+        .menu02_creditos{
+            left: 27%;
+            top: 250%;
+            width: 45%;
             height: auto;
             position: absolute;
         }
@@ -65,7 +79,7 @@ page-menu02 {
             position: absolute;
         }
         .menu02_div2{
-            top: 15%;
+            top: 13.5%;
             width: 100%;
             height: 20%;
             position: relative;
